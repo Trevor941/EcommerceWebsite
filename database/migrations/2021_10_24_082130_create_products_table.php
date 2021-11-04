@@ -20,7 +20,9 @@ class CreateProductsTable extends Migration
             $table->string('stock');
             $table->integer('category_id')->unsigned();
             $table->integer('tag_id')->unsigned();
-            $table->decimal('price', 10,2);
+            $table->decimal('regularprice', 10,2);
+            $table->decimal('saleprice', 10,2);
+            $table->integer('published')->default(1);
             $table->string('image');
             $table->timestamps();
         });
