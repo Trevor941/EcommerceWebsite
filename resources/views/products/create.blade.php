@@ -2,15 +2,139 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 header">
-        <h3>Add Product</h1>
+        <h3 class="preview-h">Add Product</h1>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-md-7">
-        <h3 class="product-detail">Add Product</h1>
+    <div class="col-md-8">
+        <h3 class="product-detail">Add Product</h3>
+        <div>
+            @if($errors->any())
+            <ul>
+            @foreach ($errors->all() as $error)
+            <li style="color:red;">{{$error}}</li>
+            @endforeach
+            </ul>
+            @endif
+        </div>
+            <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data" id="addproduct">
+                @csrf
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="">Product Name</label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Product SKU</label>
+                        <input type="text" class="form-control" name="SKU">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="">Regular Price</label>
+                        <input type="text" class="form-control" name="regularprice">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Sale Price (Optional)</label>
+                        <input type="text" class="form-control" name="saleprice">
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="">Description</label>
+                        <textarea class="ckeditor form-control" name="description" id="" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="">Stock (Optional)</label>
+                        <input type="number" class="form-control" name="stock" min="1">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Product Size</label>
+                    <select class="form-control" name="product_sizes_id">
+                        <option value="">--Select--</option>
+                        @foreach ($productsizes as $productsize)
+                        <option value="{{$productsize->id}}">{{$productsize->size}}</option>
+                        @endforeach
+                    </select>
+                    </div>
+                </div>
+               <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="">Tags (Optional)</label>
+                    <input type="text" class="form-control" name="tags">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="">Status</label>
+                    <select class="form-control" name="product_status_id">
+                        <option value="">--Select--</option>
+                        @foreach ($productstatuses as $productstatus)
+                        <option value="{{$productstatus->id}}">{{$productstatus->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+               </div>
+               <div class="row p-3">
+                <label for="">Product Color</label><br>
+                <div class="form-group col-md-12 darkerlightbg">
+                   @foreach ($productcolors as $productcolor)
+                   <div class="form-check-inline" style="margin-right: 30px;">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" value="{{$productcolor->id}}" name="product_colors_id">{{$productcolor->color}}
+                    </label>
+                  </div>
+                   @endforeach
+                </div>
+               </div>
+               <div class="row p-3">
+                <label for="">Product Category</label><br>
+               <div class="form-group col-md-12 darkerlightbg">
+                    @foreach ($categories as $category)
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" value="{{$category->id}}" name="categories[]">{{$category->name}}
+                        </label>
+                      </div>
+                    @endforeach
+                  </div>
+                 </div>
+                <div class="form-group">
+                    <label for="">Product Image</label>
+                    <input type="file" class="form-control" name="images[]" id="file" multiple/>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-block btn-primary" type="submit">Save</button>
+                </div>
+            </form>
     </div>
-    <div class="col-md-5">
-        <h3 class="product-image">Add Product</h1>
+    <div class="col-md-4">
+        <h3 class="product-image">Product Image</h3>
+        <div class="row">
+            <p id="previeww">
+
+            </p>
+        </div>
     </div>
 </div>
+<style>
+    #addproduct{
+      padding: 20px;
+    background: #fff;
+    margin-bottom: 20px;
+    }
+    .darkerlightbg{
+  background: #f8f9fc;
+    padding: 10px;
+    border-radius: 5px; 
+    }
+    
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
+    });
+</script>
 @endsection

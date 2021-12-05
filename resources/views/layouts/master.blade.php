@@ -21,6 +21,8 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('admin/css/customcss.css')}}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   
 </head>
 
 <body id="page-top">
@@ -103,7 +105,7 @@
     <!-- Page level custom scripts -->
     <script src="{{asset('admin/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{asset('admin/js/demo/chart-pie-demo.js')}}"></script>
-
+    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 </body>
 
 </html>
