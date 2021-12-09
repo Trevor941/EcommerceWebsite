@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             $table->integer('product_status_id')->unsigned();
             $table->decimal('saleprice', 10,2)->nullable();
             $table->integer('published')->default(1);
-            //$table->string('image');
+            $table->string('featuredimage');
             $table->timestamps();
 
             

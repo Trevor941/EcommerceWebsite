@@ -11,7 +11,7 @@ class Product extends Model
 
     protected $guarded = [];
     protected $table = 'products';
-    protected $fillable = ['name', 'SKU', 'regularprice', 'saleprice', 'description', 'stock', 'product_sizes_id', 'product_colors_id', 'product_status_id'];
+    protected $fillable = ['name', 'SKU', 'regularprice', 'saleprice', 'description', 'stock', 'product_sizes_id', 'product_colors_id', 'product_status_id', 'featuredimage'];
 
     public function ProductColor(){
         return $this->belongsTo(ProductColor::class);
@@ -26,7 +26,7 @@ class Product extends Model
     }
 
     public function categories(){
-        return $this->belongsToMany(Category::class, 'category_products');
+        return $this->belongsToMany(Category::class, 'category_product');
     }
 
     public function featuredimages(){

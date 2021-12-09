@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\ProductSize;
 use App\Models\ProductStatus;
 use App\Models\FeaturedImage;
+use App\Http\Requests\ProductValidateRequest;
+use Illuminate\Support\Str;
 class ProductsController extends Controller
 {
     /**
@@ -43,45 +45,26 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductValidateRequest $request)
     {
-           $data = $this->validate($request, [
-            'name' => 'required|min:3|max:28',
-            'SKU' => 'required',
-            'regularprice' => 'required',
-            'saleprice' => '',
-            'description' => '',
-            'stock' => '',
-            //'tags' => '',
-            'product_sizes_id' => 'required',
-            'product_colors_id' => 'required',
-            'product_status_id' => 'required',
-            'categories' => 'required',
-            'images' => 'required'
-
-         ]);
          $product = new Product();
-         $datainput = $request->all();
-        // if($request->hasFile('image')){
-        //         $imageName = $request->name.time().'.'.$request->image->extension();
-        //         $path = $request->file('image')->move('images', $imageName);
-        //          $datainput['image'] = $imageName;
-        // }
-        if($request->hasFile('images')){
-            foreach($request->file('images') as $image){
-                $imageName = $request->name.time().'.'.$image->extension();
-               $path = $image->move('images', $imageName);
-               $product->featuredimages()->name[] = $imageName;
-               
-            }
-            
-            
-
-        }return $imageName;
-        $product->create(
-            $datainput
-        )->categories()->attach($request->categories);
-       
+         $product->name = $request->name;
+         $product->SKU = $request->SKU;
+         $product->regularprice = $request->regularprice;
+         $product->saleprice = $request->saleprice;
+         $product->description = $request->description;
+         $product->stock = $request->stock;
+         $product->product_sizes_id = $request->product_sizes_id;
+         $product->product_colors_id = $request->product_colors_id;
+         $product->product_status_id = $request->product_status_id;
+        if($request->hasFile('featuredimage')){
+                $imageName = $request->name.time().'.'.$request->featuredimage->extension();
+                $path = $request->file('featuredimage')->move('images', $imageName);
+                 $product->featuredimage = $imageName;
+        }
+        $product->save();
+        $product->categories()->sync($request->categories);
+        return $request->all();
     
     }
 
