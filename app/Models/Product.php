@@ -32,4 +32,9 @@ class Product extends Model
     public function featuredimages(){
         return $this->hasMany(FeaturedImage::class);
     }
+
+    public function productgalleries(){
+        return $this->hasMany(ProductGallery::class);
+    }
+    
 }

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\ProductSize;
 use App\Models\ProductStatus;
 use App\Models\FeaturedImage;
+use App\Models\ProductGallery;
 use App\Http\Requests\ProductValidateRequest;
 use Illuminate\Support\Str;
 class ProductsController extends Controller
@@ -64,7 +65,18 @@ class ProductsController extends Controller
         }
         $product->save();
         $product->categories()->sync($request->categories);
-        return $request->all();
+
+        if($request->hasFile('galleryimages')){
+            foreach($request->galleryimages as $image){
+                $imageName = $request->name.uniqid().'.'.$image->extension();
+                $path = $image->move('images', $imageName);
+                $gallery = new ProductGallery();
+                $gallery->name = $imageName;
+                $gallery->product_id = $product->id;
+                $gallery->save();
+            }
+        }
+        return redirect(route('products.create'))->with('success', 'New product created successfully');
     
     }
 

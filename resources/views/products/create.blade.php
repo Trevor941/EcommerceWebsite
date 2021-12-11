@@ -101,10 +101,18 @@
                     @endforeach
                   </div>
                  </div>
-                <div class="form-group">
+               <div class="row">
+                <div class="form-group col-md-12">
                     <label for="">Product Image</label>
-                    <input type="file" class="form-control" name="featuredimage" id="file" multiple/>
+                    <input type="file" class="form-control" name="featuredimage" id="file"/>
                 </div>
+               </div>
+               <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="">Product Gallery Images</label>
+                    <input type="file" class="form-control" name="galleryimages[]" id="file" multiple/>
+                </div>
+               </div>
                 <div class="form-group">
                     <button class="btn btn-block btn-primary" type="submit">Save</button>
                 </div>
