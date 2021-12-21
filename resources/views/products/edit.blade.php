@@ -2,13 +2,13 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 header">
-        <h3 class="preview-h">Add Product</h1>
+        <h3 class="preview-h">Edit Product</h1>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-8">
-        <h3 class="product-detail">Product Details</h3>
+        <h3 class="product-detail">Edit Product Details</h3>
         <div>
             @if($errors->any())
             <ul>
@@ -18,47 +18,54 @@
             </ul>
             @endif
         </div>
-            <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data" id="addproduct">
+            <form action="{{route('products.update', $product->id)}}" method="POST" enctype="multipart/form-data" id="addproduct">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="">Product Name</label>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" class="form-control" name="name" value="{{$product->name}}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="">Product SKU</label>
-                        <input type="text" class="form-control" name="SKU">
+                        <input type="text" class="form-control" name="SKU" value="{{$product->SKU}}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="">Regular Price</label>
-                        <input type="text" class="form-control" name="regularprice" id="regularprice">
+                        <input type="text" class="form-control" name="regularprice" id="regularprice" value="{{$product->regularprice}}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="">Sale Price (Optional)</label>
                         <small id="errorsaleprice" class="text-danger" hidden>Sale price should be less than regular price</small>
-                        <input type="text" class="form-control" name="saleprice" id="saleprice">
+                        <input type="text" class="form-control" name="saleprice" id="saleprice" value="{{$product->saleprice}}">
                     </div>
                 </div>
                
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="">Description</label>
-                        <textarea class="ckeditor form-control" name="description" id="" cols="30" rows="10"></textarea>
+                        <textarea class="ckeditor form-control" name="description" id="" cols="30" rows="10">{{$product->description}}</textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="">Stock (Optional)</label>
-                        <input type="number" class="form-control" name="stock" min="1">
+                        <input type="number" class="form-control" name="stock" min="1" value="{{$product->stock}}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="">Product Size</label>
                     <select class="form-control" name="product_sizes_id">
-                        <option value="">--Select--</option>
+                        
                         @foreach ($productsizes as $productsize)
-                        <option value="{{$productsize->id}}">{{$productsize->size}}</option>
+                        <option value="{{$productsize->id}}" 
+                            @if ($productsize->id === $product->product_sizes_id)
+                            selected 
+                         @endif
+                            >
+                            {{$productsize->size}}
+                        </option>
                         @endforeach
                     </select>
                     </div>
@@ -66,15 +73,20 @@
                <div class="row">
                 <div class="form-group col-md-6">
                     <label for="">Tags (Optional)</label>
-                    <input type="text" class="form-control" name="tags" placeholder="tag1, tag3, tag3"/>
-                    
+                    <input type="text" class="form-control" name="tags" placeholder="tag1, tag3, tag3"
+                    value="@foreach($product->tags as $tag){{$tag->name}},@endforeach " />
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Status</label>
                     <select class="form-control" name="product_status_id">
                         <option value="">--Select--</option>
                         @foreach ($productstatuses as $productstatus)
-                        <option value="{{$productstatus->id}}">{{$productstatus->name}}</option>
+                        <option value="{{$productstatus->id}}"
+                            @if ($productstatus->id === $product->product_status_id)
+                            selected 
+                         @endif
+                            >{{$productstatus->name}}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -85,7 +97,11 @@
                    @foreach ($productcolors as $productcolor)
                    <div class="form-check-inline" style="margin-right: 30px;">
                     <label class="form-check-label">
-                      <input type="radio" class="form-check-input" value="{{$productcolor->id}}" name="product_colors_id">{{$productcolor->color}}
+                      <input type="radio" class="form-check-input" value="{{$productcolor->id}}" name="product_colors_id"
+                      @if ($productcolor->id === $product->product_colors_id)
+                      checked 
+                   @endif
+                      >{{$productcolor->color}}
                     </label>
                   </div>
                    @endforeach
@@ -97,7 +113,13 @@
                     @foreach ($categories as $category)
                     <div class="form-check form-check-inline">
                         <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input" value="{{$category->id}}" name="categories[]">{{$category->name}}
+                          <input type="checkbox" class="form-check-input" value="{{$category->id}}" name="categories[]"
+                          @foreach ($product->categories as $procategory)
+                          @if ($category->id === $procategory->id)
+                          checked 
+                        @endif
+                          @endforeach
+                          >{{$category->name}}
                         </label>
                       </div>
                     @endforeach
@@ -146,30 +168,5 @@
     $(document).ready(function () {
         $('.ckeditor').ckeditor();
     });
-// $(document).ready(function(){
-//     $("#submitProduct").removeAttr("disabled");
-//     $("#saleprice").change(function(){
-//         $saleprice = $("#saleprice").val();
-//         $regularprice = $("#regularprice").val();
-//         if($saleprice > $regularprice){
-//         $("#errorsaleprice").prop("hidden", false);
-//         $("#submitProduct").prop("disabled", true);
-//     }else{
-//         $("#errorsaleprice").prop("hidden", true);
-//         $("#submitProduct").prop("disabled", false);
-//     }
-// })
-// $("#regularprice").change(function(){
-//         $saleprice = $("#saleprice").val();
-//         $regularprice = $("#regularprice").val();
-//         if($saleprice > $regularprice){
-//         $("#errorsaleprice").prop("hidden", false);
-//         $("#submitProduct").prop("disabled", true);
-//     }else{
-//         $("#errorsaleprice").prop("hidden", true);
-//         $("#submitProduct").prop("disabled", false);
-//     }
-// })
-})
 </script>
 @endsection
