@@ -125,20 +125,27 @@
                     @endforeach
                   </div>
                  </div>
-               <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="">Product Image</label>
+               <div class="row p-3">
+                <label for="">Product Image</label><br>
+                <div class="form-group col-md-12 darkerlightbg">
+                    <img class="mb-3 rounded" src="{{asset('images/'.$product->featuredimage)}}" height="150px" width="150px" />
                     <input type="file" class="form-control" name="featuredimage" id="file"/>
+                    <small>Select an image to change the product image</small>
                 </div>
                </div>
                <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="">Product Gallery Images</label>
+                <label for="">Product Gallery Images</label><br>
+                <div class="form-group col-md-12 darkerlightbg">
+                        @foreach ($galleries as $imagegallery)
+                        @if ( $imagegallery->product_id === $product->id )
+                         <img class="m-1 p-1 bg-white float-left" src="{{asset('images/'.$imagegallery->name)}}" height="60px" width="60px" />  
+                          @endif
+                        @endforeach
                     <input type="file" class="form-control" name="galleryimages[]" id="file" multiple/>
                 </div>
                </div>
                 <div class="form-group">
-                    <button class="btn btn-block btn-primary" id="submitProduct" type="submit" disabled>Save</button>
+                    <button class="btn btn-block btn-primary" id="submitProduct" type="submit">Save</button>
                 </div>
             </form>
     </div>

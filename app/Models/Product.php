@@ -29,9 +29,6 @@ class Product extends Model
         return $this->belongsToMany(Category::class, 'category_product');
     }
 
-    public function featuredimages(){
-        return $this->hasMany(FeaturedImage::class);
-    }
 
     public function productgalleries(){
         return $this->hasMany(ProductGallery::class);

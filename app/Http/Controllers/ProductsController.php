@@ -11,6 +11,7 @@ use App\Models\ProductStatus;
 use App\Models\FeaturedImage;
 use App\Models\ProductGallery;
 use App\Models\Tag;
+
 use App\Http\Requests\ProductValidateRequest;
 use Illuminate\Support\Str;
 class ProductsController extends Controller
@@ -22,8 +23,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('products.index', ['products' => $products]);
+        $products = Product::paginate(22);
+        return view('products.index', compact('products'));
 
     }
 
@@ -134,7 +135,8 @@ class ProductsController extends Controller
         $productsizes = ProductSize::all();
         $productstatuses = ProductStatus::all();
         $tags = Tag::all();
-        return view('products.edit', compact(['product','productcolors', 'categories', 'productsizes', 'productstatuses', 'tags']));
+        $galleries = ProductGallery::all();
+        return view('products.edit', compact(['product','productcolors', 'categories', 'productsizes', 'productstatuses', 'tags', 'galleries']));
     }
 
     /**
@@ -202,7 +204,7 @@ class ProductsController extends Controller
                 $gallery->save();
             }
         }
-       return redirect(route('products.edit'))->with('success', 'Product updated successfully');
+       return redirect(route('products.edit', $product->id ))->with('success', 'Product updated successfully');
     }
 
     /**
