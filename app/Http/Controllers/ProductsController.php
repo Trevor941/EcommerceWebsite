@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\Category;
 use App\Models\ProductSize;
-use App\Models\ProductStatus;
 use App\Models\FeaturedImage;
 use App\Models\ProductGallery;
 use App\Models\Tag;
@@ -24,7 +23,10 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::paginate(22);
-        return view('products.index', compact('products'));
+        $categories = Category::all();
+        $published = Product::where('published', 1);
+        $draft = Product::where('published', 0);
+        return view('products.index', compact(['products', 'categories', 'published', 'draft']));
 
     }
 
@@ -38,8 +40,7 @@ class ProductsController extends Controller
         $productcolors = ProductColor::all();
         $categories = Category::all();
         $productsizes = ProductSize::all();
-        $productstatuses = ProductStatus::all();
-        return view('products.create', compact(['productcolors', 'categories', 'productsizes', 'productstatuses']));
+        return view('products.create', compact(['productcolors', 'categories', 'productsizes']));
     }
 
     /**
@@ -60,8 +61,7 @@ class ProductsController extends Controller
          $product->stock = $request->stock;
          $product->product_sizes_id = $request->product_sizes_id;
          $product->product_colors_id = $request->product_colors_id;
-         $product->product_status_id = $request->product_status_id;
-         
+         $product->published = $request->published;
          //adding a featured image
         if($request->hasFile('featuredimage')){
                 $imageName = $request->name.time().'.'.$request->featuredimage->extension();
@@ -133,10 +133,10 @@ class ProductsController extends Controller
         $productcolors = ProductColor::all();
         $categories = Category::all();
         $productsizes = ProductSize::all();
-        $productstatuses = ProductStatus::all();
         $tags = Tag::all();
         $galleries = ProductGallery::all();
-        return view('products.edit', compact(['product','productcolors', 'categories', 'productsizes', 'productstatuses', 'tags', 'galleries']));
+        return view('products.edit', compact(['product','productcolors', 'categories', 'productsizes', 'tags', 'galleries']));
+        
     }
 
     /**
@@ -156,7 +156,7 @@ class ProductsController extends Controller
          $product->stock = $request->stock;
          $product->product_sizes_id = $request->product_sizes_id;
          $product->product_colors_id = $request->product_colors_id;
-         $product->product_status_id = $request->product_status_id;
+         $product->published = $request->published;
          
          //adding a featured image
         if($request->hasFile('featuredimage')){
@@ -205,6 +205,7 @@ class ProductsController extends Controller
             }
         }
        return redirect(route('products.edit', $product->id ))->with('success', 'Product updated successfully');
+      
     }
 
     /**

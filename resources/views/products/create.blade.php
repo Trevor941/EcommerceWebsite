@@ -71,11 +71,9 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Status</label>
-                    <select class="form-control" name="product_status_id">
-                        <option value="">--Select--</option>
-                        @foreach ($productstatuses as $productstatus)
-                        <option value="{{$productstatus->id}}">{{$productstatus->name}}</option>
-                        @endforeach
+                    <select class="form-control" name="published">
+                        <option value="1">Published</option>
+                        <option value="0">Draft</option>
                     </select>
                 </div>
                </div>
@@ -116,7 +114,7 @@
                 </div>
                </div>
                 <div class="form-group">
-                    <button class="btn btn-block btn-primary" id="submitProduct" type="submit" disabled>Save</button>
+                    <button class="btn btn-block btn-primary" id="submitProduct" type="submit">Save</button>
                 </div>
             </form>
     </div>

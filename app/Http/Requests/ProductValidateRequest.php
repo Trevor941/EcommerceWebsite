@@ -25,7 +25,7 @@ class ProductValidateRequest extends FormRequest
     {
         return [
                 'name' => 'required|min:3|max:28',
-                'SKU' => 'required',
+                'SKU' => 'required|unique:products',
                 'regularprice' => 'required',
                 'saleprice' => '',
                 'description' => '',
@@ -33,7 +33,6 @@ class ProductValidateRequest extends FormRequest
                 //'tags' => '',
                 'product_sizes_id' => 'required',
                 'product_colors_id' => 'required',
-                'product_status_id' => 'required',
                 'categories' => 'required',
                 'featuredimage' => 'required'
     
@@ -42,7 +41,8 @@ class ProductValidateRequest extends FormRequest
 
     public function messages(){
         return [
-            'featuredimage.required' => 'Select an image'
+            'featuredimage.required' => 'Select an image',
+            'SKU.unique' => 'SKU has already been used. Select a unique SKU.'
         ];
     }
 }

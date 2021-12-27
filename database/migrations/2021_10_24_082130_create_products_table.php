@@ -23,9 +23,8 @@ class CreateProductsTable extends Migration
             $table->decimal('regularprice', 10,2);
             $table->integer('product_colors_id')->unsigned();
             $table->integer('product_sizes_id')->unsigned();
-            $table->integer('product_status_id')->unsigned();
             $table->decimal('saleprice', 10,2)->nullable();
-            $table->integer('published')->default(1);
+            $table->integer('published');
             $table->string('featuredimage');
             $table->timestamps();
 

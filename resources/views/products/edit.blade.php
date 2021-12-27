@@ -78,17 +78,10 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Status</label>
-                    <select class="form-control" name="product_status_id">
-                        <option value="">--Select--</option>
-                        @foreach ($productstatuses as $productstatus)
-                        <option value="{{$productstatus->id}}"
-                            @if ($productstatus->id === $product->product_status_id)
-                            selected 
-                         @endif
-                            >{{$productstatus->name}}
-                        </option>
-                        @endforeach
-                    </select>
+                    <select class="form-control" name="published">
+                            <option value="1">Published</option>
+                            <option value="0">Draft</option>
+                        </select>
                 </div>
                </div>
                <div class="row p-3">
@@ -128,7 +121,7 @@
                <div class="row p-3">
                 <label for="">Product Image</label><br>
                 <div class="form-group col-md-12 darkerlightbg">
-                    <img class="mb-3 rounded" src="{{asset('images/'.$product->featuredimage)}}" height="150px" width="150px" />
+                    <img class="m-1 p-1 bg-white float-left" src="{{asset('images/'.$product->featuredimage)}}" height="150px" width="150px" />
                     <input type="file" class="form-control" name="featuredimage" id="file"/>
                     <small>Select an image to change the product image</small>
                 </div>
