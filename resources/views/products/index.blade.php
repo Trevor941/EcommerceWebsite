@@ -8,15 +8,13 @@
 <div class="row pl-3 pr-3 pb-2 justify-content-between">
     <div >
         <span><b>All </b>({{$withTrashed->count()}}) |</span>
-        <span><a href="#">Published </a>({{$published->count()}})
-            <form action="route('products.index')" method="GET" id="searchpublished">
-                <input type="text" name="searchpublished" value="searchpublished" hidden>
-                <a href="javascript:{}" onclick="document.getElementById('searchpublished').submit();">Trash({{$AllTrashedProducts->count()}})</a>
-            </form>
-            |</span>
+        <span><a href="#">Published </a>({{$published->count()}}) |</span>
         <span><a href="#">Draft </a>({{$draft->count()}}) |</span>
         <span>
-            
+            {{-- <form action="/searchtrash" method="GET" id="searchtrash">
+                <input type="text" name="searchtrash" value="searchtrash" hidden>
+                <a href="javascript:{}" onclick="document.getElementById('searchtrash').submit();">Trash({{$AllTrashedProducts->count()}})</a>
+            </form> --}}
             <a href="/AllTrashedProducts">Trash </a>({{$AllTrashedProducts->count()}}) |</span>
         <span><a href="#">Sorting </a></span>
     </div>

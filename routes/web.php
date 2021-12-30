@@ -27,4 +27,4 @@ Route::get('/deleteProduct/{id}','App\Http\Controllers\ProductsController@delete
 Route::get('/restoreProduct/{id}','App\Http\Controllers\ProductsController@restoreProduct');
 Route::get('/restoreAllProducts','App\Http\Controllers\ProductsController@restoreAllProducts');
 Route::get('/AllTrashedProducts','App\Http\Controllers\ProductsController@AllTrashedProducts');
-Route::get('/searchpublished','App\Http\Controllers\ProductsController@searchpublished');
+Route::get('/search','App\Http\Controllers\ProductsController@search');
