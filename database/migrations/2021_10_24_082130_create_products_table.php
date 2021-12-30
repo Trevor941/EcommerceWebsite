@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->decimal('saleprice', 10,2)->nullable();
             $table->integer('published');
             $table->string('featuredimage');
+            $table->softDeletes();
             $table->timestamps();
 
             

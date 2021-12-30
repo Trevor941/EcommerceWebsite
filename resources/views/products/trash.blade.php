@@ -2,22 +2,15 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 header">
-        <h3 class="preview-h">All Products</h1>
+        <h3 class="preview-h">Trash</h1>
     </div>
 </div>
 <div class="row pl-3 pr-3 pb-2 justify-content-between">
     <div >
         <span><b>All </b>({{$withTrashed->count()}}) |</span>
-        <span><a href="#">Published </a>({{$published->count()}})
-            <form action="route('products.index')" method="GET" id="searchpublished">
-                <input type="text" name="searchpublished" value="searchpublished" hidden>
-                <a href="javascript:{}" onclick="document.getElementById('searchpublished').submit();">Trash({{$AllTrashedProducts->count()}})</a>
-            </form>
-            |</span>
+        <span><a href="#">Published </a>({{$published->count()}}) |</span>
         <span><a href="#">Draft </a>({{$draft->count()}}) |</span>
-        <span>
-            
-            <a href="/AllTrashedProducts">Trash </a>({{$AllTrashedProducts->count()}}) |</span>
+        <span><a href="/AllTrashedProducts">Trash </a>({{$AllTrashedProducts->count()}}) |</span>
         <span><a href="#">Sorting </a></span>
     </div>
     <div>
@@ -93,7 +86,7 @@
                    </tr> 
                 </thead>
                 <tbody>
-                    @foreach ($products as $product)
+                    @foreach ($AllTrashedProducts as $product)
                         <tr>
                             <td>
                                 <div class="form-check">
@@ -111,9 +104,9 @@
                                 @endif
                             </td>
                             <td><b>{{$product->name}}</b><br>
-                            <span> ID:{{$product->id}} | <a href="{{route('products.edit', $product->id)}}">Edit</a> |
-                                 <a class="text-danger" href="/trashProduct/{{$product->id}}">Trash</a>
-                                | <a class="" href="">View</a> | <a href="">Duplicate</a>
+                            <span> ID:{{$product->id}} | <a href="/restoreProduct/{{$product->id}}">Restore</a> |
+                                 <a class="text-danger" href="/deleteProduct/{{$product->id}}">Delete Permanently</a>
+                                | <a href="">Duplicate</a>
                             </span>
                             </td>
                             <td>{{$product->SKU}}</td>
@@ -143,7 +136,7 @@
                 </tbody>
 
             </table>
-            {{ $products->links() }}
+            {{-- {{ $products->links() }} --}}
         </div>
     </div>
 </div>

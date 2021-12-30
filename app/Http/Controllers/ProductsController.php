@@ -13,6 +13,7 @@ use App\Models\Tag;
 
 use App\Http\Requests\ProductValidateRequest;
 use Illuminate\Support\Str;
+
 class ProductsController extends Controller
 {
     /**
@@ -20,13 +21,15 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $withTrashed = Product::withTrashed()->get();
+        $AllTrashedProducts = Product::onlyTrashed()->get();
         $products = Product::paginate(22);
         $categories = Category::all();
         $published = Product::where('published', 1);
         $draft = Product::where('published', 0);
-        return view('products.index', compact(['products', 'categories', 'published', 'draft']));
+        return view('products.index', compact(['products', 'categories', 'published', 'draft', 'AllTrashedProducts', 'withTrashed']));
 
     }
 
@@ -217,5 +220,40 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function trashProduct($id){
+        Product::findOrFail($id)->delete();
+        return redirect(route('products.index'));
+    }
+
+    public function deleteProduct($id){
+        Product::onlyTrashed()->findOrFail($id)->forceDelete();
+        return redirect(route('products.index'));
+    }
+    public function restoreProduct($id){
+        Product::onlyTrashed()->findOrFail($id)->restore();
+        return redirect(route('products.index'));
+    }
+
+    public function restoreAllProducts(){
+        Product::withTrashed()->restore();
+        return redirect(route('products.index'));
+    }
+
+    public function AllTrashedProducts(){
+        
+        $withTrashed = Product::withTrashed()->get();
+        $AllTrashedProducts = Product::onlyTrashed()->get();
+        $categories = Category::all();
+        $published = Product::where('published', 1);
+        $draft = Product::where('published', 0);
+        return view('products.trash', compact(['AllTrashedProducts', 'categories', 'published', 'draft', 'withTrashed']));
+    }
+
+    public function searchpublished(Request $request){
+        $search_text = $request->get('searchtrash');
+        $published = Product::where('published', 1);
+
     }
 }
