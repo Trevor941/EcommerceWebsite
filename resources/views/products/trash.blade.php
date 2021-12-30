@@ -7,16 +7,26 @@
 </div>
 <div class="row pl-3 pr-3 pb-2 justify-content-between">
     <div >
-        <span><b>All </b>({{$withTrashed->count()}}) |</span>
-        <span><a href="#">Published </a>({{$published->count()}}) |</span>
-        <span><a href="#">Draft </a>({{$draft->count()}}) |</span>
-        <span><a href="/AllTrashedProducts">Trash </a>({{$AllTrashedProducts->count()}}) |</span>
+        <span><b><a href="/products">All</a> </b>({{$withTrashed->count()}}) |</span>
+        <span>
+            <form class="form-inline" action="{{route('products.index')}}" method="GET" id="searchpublished" style="display: inline-block;">
+                <input type="text" name="published" value="published" hidden>
+                <a href="javascript:{}" onclick="document.getElementById('searchpublished').submit();">Published </a>({{$published->count()}}) |
+        </form>
+        </span>
+        <span>
+        <form class="form-inline" action="{{route('products.index')}}" method="GET" id="searchdraft" style="display: inline-block;">
+                <input type="text" name="draft" value="draft" hidden>
+                <a href="javascript:{}" onclick="document.getElementById('searchdraft').submit();">Draft </a>({{$draft->count()}}) |
+        </form>
+        </span>
+            <span><a href="/AllTrashedProducts">Trash </a> ({{$AllTrashedProducts->count()}}) |</span>
         <span><a href="#">Sorting </a></span>
     </div>
     <div>
-        <form action="" class="form-inline">
+        <form action="{{route('products.index')}}" method="GET" class="form-inline" >
             <div class="form-group mr-1">
-                <input type="text" name="searchproduct" class="form-control">
+                <input type="text" name="searchresult" class="form-control" value="{{request()->query('searchresult')}}">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-indexbtns">Search products</button>

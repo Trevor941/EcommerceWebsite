@@ -21,11 +21,31 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        $searchproduct = request()->query('searchresult');
+        $searchdraft = request()->query('draft');
+        $searchpublished = request()->query('published');
+        $searchtrash = request()->query('searchtrash');
+        if($searchdraft){
+            $products = Product::where('published', 'LIKE', "0")->paginate(22);
+        }
+        else if($searchpublished){
+            $products = Product::where('published', 'LIKE', "1")->paginate(22);  
+        }
+        else if($searchproduct){
+            $products = Product::where('name', 'LIKE', "%{$searchproduct}%")->paginate(22);  
+        }
+
+        else if($searchtrash){
+            $products = Product::where('deleted_at', '!=', NULL)->paginate(22);  
+        }
+        else {
+            $products = Product::paginate(22); 
+        }
+
         $withTrashed = Product::withTrashed()->get();
         $AllTrashedProducts = Product::onlyTrashed()->get();
-        $products = Product::paginate(22);
         $categories = Category::all();
         $published = Product::where('published', 1);
         $draft = Product::where('published', 0);
