@@ -97,8 +97,11 @@ class ProductsController extends Controller
         $product->categories()->sync($request->categories);
 
         //getting string of tags and converting it into an array
-        $explode_tags = explode(',', $request->tags);
+        if($request->tags){
 
+        
+        $explode_tags = explode(',', $request->tags);
+  
         //initializing tagids array
         $tagids = array();
 
@@ -119,7 +122,7 @@ class ProductsController extends Controller
             //assigning tags to a product
          $product->tags()->sync($tagids);
         // return $tagids;
-
+    }
       // adding multiple gallery images
         if($request->hasFile('galleryimages')){
             foreach($request->galleryimages as $image){
@@ -183,6 +186,7 @@ class ProductsController extends Controller
          
          //adding a featured image
         if($request->hasFile('featuredimage')){
+               unlink( public_path()."/images/".$product->featuredimage);
                 $imageName = $request->name.time().'.'.$request->featuredimage->extension();
                 $path = $request->file('featuredimage')->move('images', $imageName);
                  $product->featuredimage = $imageName;
@@ -193,6 +197,7 @@ class ProductsController extends Controller
         $product->categories()->sync($request->categories);
 
         //getting string of tags and converting it into an array
+       if($request->tags === ''){
         $explode_tags = explode(',', $request->tags);
 
         //initializing tagids array
@@ -215,7 +220,7 @@ class ProductsController extends Controller
             //assigning tags to a product
          $product->tags()->sync($tagids);
         // return $tagids;
-
+    }
       // adding multiple gallery images
         if($request->hasFile('galleryimages')){
             foreach($request->galleryimages as $image){
@@ -248,7 +253,15 @@ class ProductsController extends Controller
     }
 
     public function deleteProduct($id){
-        Product::onlyTrashed()->findOrFail($id)->forceDelete();
+        $product = Product::onlyTrashed()->findOrFail($id);
+        unlink( public_path()."/images/".$product->featuredimage);
+        $galleryimages = ProductGallery::all();
+        foreach($galleryimages as $galleryimage){
+            if($galleryimage->product_id === $product->id){
+                unlink( public_path()."/images/".$galleryimage->name);
+            }
+        }
+        $product->forceDelete();
         return redirect(route('products.index'));
     }
     public function restoreProduct($id){
