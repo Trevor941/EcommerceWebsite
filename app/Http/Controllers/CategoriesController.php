@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\Category;
 
 class CategoriesController extends Controller
 {
@@ -13,7 +15,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::paginate(10);
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -34,7 +37,23 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->name;
+        if($request->slug){
+            $category->slug = $request->slug;
+        }
+        else{
+            $category->slug = Str::slug($category->name, '-');
+        }
+        $category->CountProducts = 0;
+        $category->description = $request->description;
+        if($request->hasFile('image')){
+            $imageName = $request->name.time().'.'.$request->image->extension();
+            $path = $request->file('image')->move('images', $imageName);
+             $category->image = $imageName;
+    }
+    $category->save();
+    return redirect(route('categories.index'))->with('success', 'New category created successfully');
     }
 
     /**
@@ -56,7 +75,9 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category =  Category::findOrFail($id);
+        $categories = Category::paginate(10);
+        return view('categories.index', compact('category', 'categories'));
     }
 
     /**
@@ -68,7 +89,24 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $category =  Category::findOrFail($id);
+        $category->name = $request->name;
+        if($request->slug){
+            $category->slug = $request->slug;
+        }
+        else{
+            $category->slug = Str::slug($category->name, '-');
+        }
+        $category->CountProducts = 0;
+        $category->description = $request->description;
+        if($request->hasFile('image')){
+            $imageName = $request->name.time().'.'.$request->image->extension();
+            $path = $request->file('image')->move('images', $imageName);
+             $category->image = $imageName;
+    }
+    $category->update();
+    return redirect(route('categories.index'))->with('success', 'Category updated successfully');
     }
 
     /**
@@ -79,6 +117,8 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return Redirect()->back();
     }
 }
