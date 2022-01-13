@@ -54,7 +54,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Action</h6>
                 <a class="collapse-item" href="{{route('categories.index')}}">All Categories</a>
-                <a class="collapse-item" href="{{route('categories.create')}}">Add Category</a>
+                <a class="collapse-item" href="{{route('categories.index')}}">Add Category</a>
             </div>
         </div>
     </li>
