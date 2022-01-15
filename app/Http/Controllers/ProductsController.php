@@ -10,7 +10,7 @@ use App\Models\ProductSize;
 use App\Models\FeaturedImage;
 use App\Models\ProductGallery;
 use App\Models\Tag;
-
+use App\Models\Role;
 use App\Http\Requests\ProductValidateRequest;
 use Illuminate\Support\Str;
 
@@ -21,6 +21,10 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public  function  __construct(){
+       $this->middleware('admin');
+      
+    }
     public function index()
     {
         $searchproduct = request()->query('searchresult');
@@ -288,5 +292,19 @@ class ProductsController extends Controller
         $search_text = $request->get('searchtrash');
         $published = Product::where('published', 1);
 
+    }
+
+    public function useroles(){
+
+      //  $role = Role::findOrFail($id);
+      $user = auth()->user();
+        
+
+        if(auth()->user()->roles->contains('name', 'Admin')){
+            return 'true';
+           }
+           else{
+            return redirect('/login');
+           }
     }
 }

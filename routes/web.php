@@ -28,3 +28,4 @@ Route::get('/restoreProduct/{id}','App\Http\Controllers\ProductsController@resto
 Route::get('/restoreAllProducts','App\Http\Controllers\ProductsController@restoreAllProducts');
 Route::get('/AllTrashedProducts','App\Http\Controllers\ProductsController@AllTrashedProducts');
 Route::get('/search','App\Http\Controllers\ProductsController@search');
+Route::get('/roles','App\Http\Controllers\ProductsController@useroles');

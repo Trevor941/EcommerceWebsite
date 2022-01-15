@@ -3,6 +3,11 @@
 <div class="row">
     <div class="col-md-12 header">
         <h3 class="preview-h">All Products</h1>
+            <ul>
+            @foreach ($role->users() as $user )
+                <li>{{$user->name}}</li>
+            @endforeach
+        </ul> 
     </div>
 </div>
 <div class="row pl-3 pr-3 pb-2 justify-content-between">
