@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\ProductSize;
+use App\Models\Size;
 
 class ProductSizesSeeder extends Seeder
 {
@@ -14,22 +14,22 @@ class ProductSizesSeeder extends Seeder
      */
     public function run()
     {
-        $xtrasmall = ProductSize::create([
+        $xtrasmall = Size::create([
             'size' => 'xtrasmall'
         ]);
-        $small = ProductSize::create([
+        $small = Size::create([
             'size' => 'small'
         ]);
-        $medium = ProductSize::create([
+        $medium = Size::create([
             'size' => 'medium'
         ]);
-        $small = ProductSize::create([
+        $small = Size::create([
             'size' => 'small'
         ]);
-        $large = ProductSize::create([
+        $large = Size::create([
             'size' => 'large'
         ]);
-        $xtralarge = ProductSize::create([
+        $xtralarge = Size::create([
             'size' => 'xtralarge'
         ]);
     }

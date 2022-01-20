@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
        // \App\Models\Customer::factory(200)->create();
         $this->call([ProductSizesSeeder::class, CategoriesSeeder::class, 
-        ProductColorsSeeder::class, ProductTagsSeeder::class, RoleSeeder::class, UsersSeeder::class
+        ProductColorsSeeder::class, ProductTagsSeeder::class, RoleSeeder::class, UsersSeeder::class,RoleUserPivotSeeder::class
     ]);
     }
 }

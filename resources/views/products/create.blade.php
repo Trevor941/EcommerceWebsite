@@ -83,7 +83,7 @@
                    @foreach ($productcolors as $productcolor)
                    <div class="form-check-inline" style="margin-right: 30px;">
                     <label class="form-check-label">
-                      <input type="radio" class="form-check-input" value="{{$productcolor->id}}" name="product_colors_id">{{$productcolor->color}}
+                      <input type="radio" class="form-check-input" value="{{$productcolor->id}}" name="product_colors_id">{{$productcolor->name}}
                     </label>
                   </div>
                    @endforeach

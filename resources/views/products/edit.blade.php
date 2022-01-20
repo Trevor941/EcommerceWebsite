@@ -94,7 +94,7 @@
                       @if ($productcolor->id === $product->product_colors_id)
                       checked 
                    @endif
-                      >{{$productcolor->color}}
+                      >{{$productcolor->name}}
                     </label>
                   </div>
                    @endforeach
@@ -118,6 +118,7 @@
                     @endforeach
                   </div>
                  </div>
+
                <div class="row p-3">
                 <label for="">Product Image</label><br>
                 <div class="form-group col-md-12 darkerlightbg">
@@ -129,15 +130,13 @@
                <div class="row">
                 <label for="">Product Gallery Images</label><br>
                 <div class="form-group col-md-12 darkerlightbg">
-                        @foreach ($galleries as $imagegallery)
-                        @if ( $imagegallery->product_id === $product->id )
-                         
-                         <div class="img-wraps">
-                            <span class="closes" title="Delete">×</span>
-                             // give image path
-                             <img class="m-1 p-1 bg-white float-left" src="{{asset('images/'.$imagegallery->name)}}" height="70px" width="70px" /> 
-                            </div> 
-                          @endif
+                        @foreach ($product->galleryimages as $image)
+                        <div class="form-check form-check-inline m-1 p-1">
+                            <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input" value="{{$image->name}}" name="inimages[]" checked />
+                              <img class=" bg-white float-left" src="{{asset('images/'.$image->name)}}" height="70px" width="70px" />                          
+                            </label>
+                          </div>
                         @endforeach
                     <input type="file" class="form-control" name="galleryimages[]" id="file" multiple/>
                 </div>
@@ -148,23 +147,12 @@
                 </div>
             </form>
     </div>
-    {{-- <div class="dsp container">
-        <form action="method" name="upload-file" id="multiple-files-upload" enctype="multipart/form-data">
-          <div class="row">              
-            <div class="col-lg-12 pakainfo">                    
-                      <div class="input-group">
-                        <input type="file" name="products_uploaded[]" id="products_uploaded" class="form-control" value="Upload" multiple="multiple"> 
-                        <span class="input-group-btn">
-                          <button type="submit" name="submit" id="submit" class="btn btn-primary dsp" type="button">Upload!</button>
-                        </span>
-                      </div>
-                  </div>
-            <div class="col-lg-12 text-center" id="display_product_list"><ul></ul></div>
-          </div>
-        </form>
-      </div> --}}
+   
 </div>
 <style>
+    .form-check-inline .form-check-input{
+        margin-left: -15px !important;
+    }
     #addproduct{
       padding: 20px;
     background: #fff;

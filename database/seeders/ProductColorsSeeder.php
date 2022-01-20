@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\ProductColor;
+use App\Models\Color;
 
 class ProductColorsSeeder extends Seeder
 {
@@ -14,32 +14,32 @@ class ProductColorsSeeder extends Seeder
      */
     public function run()
     {
-        $blue = ProductColor::create([
-            'color' => 'blue'
+        $blue = Color::create([
+            'name' => 'blue'
         ]);
-        $red = ProductColor::create([
-            'color' => 'red'
+        $red = Color::create([
+            'name' => 'red'
         ]);
-        $black = ProductColor::create([
-            'color' => 'black'
+        $black = Color::create([
+            'name' => 'black'
         ]);
-        $pink = ProductColor::create([
-            'color' => 'pink'
+        $pink = Color::create([
+            'name' => 'pink'
         ]);
-        $white = ProductColor::create([
-            'color' => 'white'
+        $white = Color::create([
+            'name' => 'white'
         ]);
-        $yellow = ProductColor::create([
-            'color' => 'blue'
+        $yellow = Color::create([
+            'name' => 'blue'
         ]);
-        $green = ProductColor::create([
-            'color' => 'green'
+        $green = Color::create([
+            'name' => 'green'
         ]);
-        $brown = ProductColor::create([
-            'color' => 'brown'
+        $brown = Color::create([
+            'name' => 'brown'
         ]);
-        $grey = ProductColor::create([
-            'color' => 'grey'
+        $grey = Color::create([
+            'name' => 'grey'
         ]);
     }
 }

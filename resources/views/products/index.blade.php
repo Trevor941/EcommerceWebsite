@@ -4,9 +4,9 @@
     <div class="col-md-12 header">
         <h3 class="preview-h">All Products</h1>
             <ul>
-            @foreach ($role->users() as $user )
+            {{-- @foreach ($role->users() as $user )
                 <li>{{$user->name}}</li>
-            @endforeach
+            @endforeach --}}
         </ul> 
     </div>
 </div>

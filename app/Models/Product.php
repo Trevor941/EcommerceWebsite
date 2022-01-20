@@ -14,12 +14,12 @@ class Product extends Model
     protected $table = 'products';
     protected $fillable = ['name', 'SKU', 'regularprice', 'saleprice', 'description', 'stock', 'product_sizes_id', 'product_colors_id', 'featuredimage', 'deleted_at'];
 
-    public function ProductColor(){
-        return $this->belongsTo(ProductColor::class);
+    public function Color(){
+        return $this->belongsTo(Color::class);
     }
 
-    public function ProductSize(){
-        return $this->belongsTo(ProductSize::class);
+    public function size(){
+        return $this->belongsTo(Size::class);
     }
 
     public function ProductStatus(){
@@ -31,8 +31,8 @@ class Product extends Model
     }
 
 
-    public function productgalleries(){
-        return $this->hasMany(ProductGallery::class);
+    public function galleryimages(){
+        return $this->hasMany(Gallery::class);
     }
 
     public function tags(){

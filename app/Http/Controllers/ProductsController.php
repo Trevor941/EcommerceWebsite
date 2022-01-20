@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\ProductColor;
+use App\Models\Color;
 use App\Models\Category;
-use App\Models\ProductSize;
+use App\Models\Size;
 use App\Models\FeaturedImage;
-use App\Models\ProductGallery;
+use App\Models\Gallery;
 use App\Models\Tag;
 use App\Models\Role;
 use App\Http\Requests\ProductValidateRequest;
@@ -53,8 +53,8 @@ class ProductsController extends Controller
         $categories = Category::all();
         $published = Product::where('published', 1);
         $draft = Product::where('published', 0);
-        return view('products.index', compact(['products', 'categories', 'published', 'draft', 'AllTrashedProducts', 'withTrashed']));
-
+       return view('products.index', compact(['products', 'categories', 'published', 'draft', 'AllTrashedProducts', 'withTrashed']));
+            
     }
 
     /**
@@ -64,9 +64,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $productcolors = ProductColor::all();
+        $productcolors = Color::all();
         $categories = Category::all();
-        $productsizes = ProductSize::all();
+        $productsizes = Size::all();
         return view('products.create', compact(['productcolors', 'categories', 'productsizes']));
     }
 
@@ -132,7 +132,7 @@ class ProductsController extends Controller
             foreach($request->galleryimages as $image){
                 $imageName = $request->name.uniqid().'.'.$image->extension();
                 $path = $image->move('images', $imageName);
-                $gallery = new ProductGallery();
+                $gallery = new Gallery();
                 $gallery->name = $imageName;
                 $gallery->product_id = $product->id;
                 $gallery->save();
@@ -160,13 +160,12 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
-        $productcolors = ProductColor::all();
+        $productcolors = Color::all();
         $categories = Category::all();
-        $productsizes = ProductSize::all();
+        $productsizes = Size::all();
         $tags = Tag::all();
-        $galleries = ProductGallery::all();
+        $galleries = Gallery::all();
         return view('products.edit', compact(['product','productcolors', 'categories', 'productsizes', 'tags', 'galleries']));
-        
     }
 
     /**
@@ -190,7 +189,11 @@ class ProductsController extends Controller
          
          //adding a featured image
         if($request->hasFile('featuredimage')){
-               unlink( public_path()."/images/".$product->featuredimage);
+               $file =  public_path()."/images/".$product->featuredimage;
+            if(file_exists($file)){
+                unlink( public_path()."/images/".$product->featuredimage);
+              }
+              
                 $imageName = $request->name.time().'.'.$request->featuredimage->extension();
                 $path = $request->file('featuredimage')->move('images', $imageName);
                  $product->featuredimage = $imageName;
@@ -225,19 +228,40 @@ class ProductsController extends Controller
          $product->tags()->sync($tagids);
         // return $tagids;
     }
-      // adding multiple gallery images
+    
+
+    
+    if($request->inimages){
+           foreach($request->inimages as $reqimage){
+               $reqimagecheck = Gallery::where('name', $reqimage)->first();
+               if($reqimagecheck === null){
+                $newimage = new Gallery();
+                $newimage->name = $reqimage;
+                $newimage->product_id = $product->id;
+                $newimage->save();
+               }
+               }
+           
+        }
+    
+           return redirect()->back();
+          
+           
+   
+
+      // adding multiple gallery images unlink( public_path()."/images/".$gimage->name);
         if($request->hasFile('galleryimages')){
             foreach($request->galleryimages as $image){
                 $imageName = $request->name.uniqid().'.'.$image->extension();
                 $path = $image->move('images', $imageName);
-                $gallery = new ProductGallery();
+                $gallery = new Gallery();
                 $gallery->name = $imageName;
                 $gallery->product_id = $product->id;
                 $gallery->save();
             }
         }
-       return redirect(route('products.edit', $product->id ))->with('success', 'Product updated successfully');
-      
+      //return redirect(route('products.edit', $product->id ))->with('success', 'Product updated successfully');
+     // return $request->inimages;
     }
 
     /**
@@ -259,7 +283,7 @@ class ProductsController extends Controller
     public function deleteProduct($id){
         $product = Product::onlyTrashed()->findOrFail($id);
         unlink( public_path()."/images/".$product->featuredimage);
-        $galleryimages = ProductGallery::all();
+        $galleryimages = Gallery::all();
         foreach($galleryimages as $galleryimage){
             if($galleryimage->product_id === $product->id){
                 unlink( public_path()."/images/".$galleryimage->name);
