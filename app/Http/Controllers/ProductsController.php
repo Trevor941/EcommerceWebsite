@@ -13,7 +13,7 @@ use App\Models\Tag;
 use App\Models\Role;
 use App\Http\Requests\ProductValidateRequest;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\File;
 class ProductsController extends Controller
 {
     /**
@@ -232,19 +232,34 @@ class ProductsController extends Controller
 
     
     if($request->inimages){
+        $product->galleryimages()->delete();
+        $filename = '';
+        $path = public_path('images');
+        $allFiles = File::allFiles($path); 
+      
            foreach($request->inimages as $reqimage){
-               $reqimagecheck = Gallery::where('name', $reqimage)->first();
-               if($reqimagecheck === null){
                 $newimage = new Gallery();
                 $newimage->name = $reqimage;
                 $newimage->product_id = $product->id;
                 $newimage->save();
                }
-               }
+               
+               foreach($allFiles as $filee){
+                $filename = $filee->getFileName();
+                $checkfilenamexists = Gallery::where('name', $filename)->first();
+               if($checkfilenamexists === null){
+                File::delete(public_path()."/images/".$filename);
+              }
+            }
            
+             //  dd($allFiles);
+             
+             
+               
+            // return $filename;
         }
     
-           return redirect()->back();
+          
           
            
    
@@ -260,8 +275,8 @@ class ProductsController extends Controller
                 $gallery->save();
             }
         }
-      //return redirect(route('products.edit', $product->id ))->with('success', 'Product updated successfully');
-     // return $request->inimages;
+     return redirect(route('products.edit', $product->id ))->with('success', 'Product updated successfully');
+     //return $request->inimages;
     }
 
     /**
@@ -282,11 +297,17 @@ class ProductsController extends Controller
 
     public function deleteProduct($id){
         $product = Product::onlyTrashed()->findOrFail($id);
-        unlink( public_path()."/images/".$product->featuredimage);
+        $filepath = public_path()."/images/".$product->featuredimage;
+        if(file_exists($filepath)){
+        unlink( $filepath);
+        }
         $galleryimages = Gallery::all();
         foreach($galleryimages as $galleryimage){
             if($galleryimage->product_id === $product->id){
-                unlink( public_path()."/images/".$galleryimage->name);
+                $filepath = public_path()."/images/".$galleryimage->name;
+        if(file_exists($filepath)){
+        unlink( $filepath);
+        }
             }
         }
         $product->forceDelete();
