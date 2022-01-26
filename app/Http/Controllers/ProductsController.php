@@ -92,7 +92,7 @@ class ProductsController extends Controller
          //adding a featured image
         if($request->hasFile('featuredimage')){
                 $imageName = $request->name.time().'.'.$request->featuredimage->extension();
-                $path = $request->file('featuredimage')->move('images', $imageName);
+                $path = $request->file('featuredimage')->move('images/featuredimg', $imageName);
                  $product->featuredimage = $imageName;
         }
         $product->save();
@@ -131,7 +131,7 @@ class ProductsController extends Controller
         if($request->hasFile('galleryimages')){
             foreach($request->galleryimages as $image){
                 $imageName = $request->name.uniqid().'.'.$image->extension();
-                $path = $image->move('images', $imageName);
+                $path = $image->move('images/galleryimages', $imageName);
                 $gallery = new Gallery();
                 $gallery->name = $imageName;
                 $gallery->product_id = $product->id;
@@ -189,13 +189,13 @@ class ProductsController extends Controller
          
          //adding a featured image
         if($request->hasFile('featuredimage')){
-               $file =  public_path()."/images/".$product->featuredimage;
+               $file =  public_path()."images/featuredimg".$product->featuredimage;
             if(file_exists($file)){
-                unlink( public_path()."/images/".$product->featuredimage);
+                unlink( public_path()."images/featuredimg".$product->featuredimage);
               }
               
                 $imageName = $request->name.time().'.'.$request->featuredimage->extension();
-                $path = $request->file('featuredimage')->move('images', $imageName);
+                $path = $request->file('featuredimage')->move('images/featuredimg', $imageName);
                  $product->featuredimage = $imageName;
         }
         $product->update();
@@ -248,7 +248,7 @@ class ProductsController extends Controller
                 $filename = $filee->getFileName();
                 $checkfilenamexists = Gallery::where('name', $filename)->first();
                if($checkfilenamexists === null){
-                File::delete(public_path()."/images/".$filename);
+                File::delete(public_path()."images/galleryimages".$filename);
               }
             }
            
@@ -256,7 +256,7 @@ class ProductsController extends Controller
              
              
                
-            // return $filename;
+             
         }
     
           
@@ -268,7 +268,7 @@ class ProductsController extends Controller
         if($request->hasFile('galleryimages')){
             foreach($request->galleryimages as $image){
                 $imageName = $request->name.uniqid().'.'.$image->extension();
-                $path = $image->move('images', $imageName);
+                $path = $image->move('images/galleryimages', $imageName);
                 $gallery = new Gallery();
                 $gallery->name = $imageName;
                 $gallery->product_id = $product->id;
@@ -297,14 +297,14 @@ class ProductsController extends Controller
 
     public function deleteProduct($id){
         $product = Product::onlyTrashed()->findOrFail($id);
-        $filepath = public_path()."/images/".$product->featuredimage;
+        $filepath = public_path()."images/featuredimg".$product->featuredimage;
         if(file_exists($filepath)){
         unlink( $filepath);
         }
         $galleryimages = Gallery::all();
         foreach($galleryimages as $galleryimage){
             if($galleryimage->product_id === $product->id){
-                $filepath = public_path()."/images/".$galleryimage->name;
+                $filepath = public_path()."images/galleryimages".$galleryimage->name;
         if(file_exists($filepath)){
         unlink( $filepath);
         }

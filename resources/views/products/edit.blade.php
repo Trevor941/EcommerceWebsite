@@ -122,7 +122,7 @@
                <div class="row p-3">
                 <label for="">Product Image</label><br>
                 <div class="form-group col-md-12 darkerlightbg">
-                    <img class="m-1 p-1 bg-white float-left" src="{{asset('images/'.$product->featuredimage)}}" height="150px" width="150px" />
+                    <img class="m-1 p-1 bg-white float-left" src="{{asset('images/featuredimg/'.$product->featuredimage)}}" height="150px" width="150px" />
                     <input type="file" class="form-control" name="featuredimage" id="file"/>
                     <small>Select an image to change the product image</small>
                 </div>
@@ -134,7 +134,7 @@
                         <div class="form-check form-check-inline m-1 p-1">
                             <label class="form-check-label">
                               <input type="checkbox" class="form-check-input" value="{{$image->name}}" name="inimages[]" checked />
-                              <img class=" bg-white float-left" src="{{asset('images/'.$image->name)}}" height="70px" width="70px" />                          
+                              <img class=" bg-white float-left" src="{{asset('images/galleryimages/'.$image->name)}}" height="70px" width="70px" />                          
                             </label>
                           </div>
                         @endforeach
