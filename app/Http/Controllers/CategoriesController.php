@@ -93,12 +93,12 @@ class CategoriesController extends Controller
         $category =  Category::findOrFail($id);
         $category->name = $request->name;
         if($request->slug){
-            $category->slug = $request->slug;
+            $category->slug = Str::slug($request->slug, '-');
         }
         else{
             $category->slug = Str::slug($category->name, '-');
         }
-        $category->CountProducts = 0;
+        
         $category->description = $request->description;
         if($request->hasFile('image')){
             $imageName = $request->name.time().'.'.$request->image->extension();

@@ -1,6 +1,33 @@
 /*custom css*/
-.product-image, .product-detail, .header h3{
+.product-image, .product-detail{
     background: #fff !important;
       padding: 20px !important;
   }
-  
+  .header h3{
+    padding: 20px !important;
+    background: #FF6F61 !important;
+    color: #fff;
+    margin-bottom: 30px;
+  }
+  .sidebar, .scroll-to-top{
+    background: #FF6F61 !important;
+  }
+  .btn-primary{
+    background: #FF6F61 !important;
+    border-color: #FF6F61 !important;
+  }
+  .sidebar-dark .nav-item .nav-link i {
+    color: rgb(255 255 255 / 64%) !important;
+}
+.container-fluid a{
+  color: #FF6F61 !important;
+}
+.username{
+  color: #d1d3e2 !important;
+  font-weight: 900;
+}
+.topbar, footer.sticky-footer {
+  background: #2a2a2a !important;
+  color: #FF6F61 !important;
+  font-weight: 900;
+}

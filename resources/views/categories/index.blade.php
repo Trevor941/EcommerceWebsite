@@ -2,20 +2,63 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 header">
-        <h3 class="preview-h">All Products</h1>
+        <h3 class="preview-h">All Categories</h1>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4" style="padding-top:120px;">
+<div class="offset-md-4 col-md-8">
+    <div class="row pl-3 pr-3 pb-2 justify-content-between">
+        <div>
+            .
+        </div>
+        <div>
+            <form action="{{route('products.index')}}" method="GET" class="form-inline" >
+                <div class="form-group mr-1">
+                    <input type="text" name="searchresult" class="form-control" value="{{request()->query('searchresult')}}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-indexbtns">Search Categories</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row pl-3 pr-3 pb-3 justify-content-between">
+        <div>
+            <form action="" class="form-inline">
+                <div class="form-group mr-1">
+                    <select name="" id="" class="form-control">
+                        <option value="">Bulk actions</option>
+                        <option value="">Trash</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-indexbtns">Apply</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <form action="" class="form-inline">
+                <div class="form-group mr-1">
+                    {{ $categories->appends(['search' => request()->query('search')])->links() }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row pt-3 pb-3 bg-white" style="
+border-top: 1px solid #ddd !important;
+">
+    <div class="col-md-4">
       @isset($category)
       <h5>Edit new category</h5>
       @endisset
       @empty($category)
       <h5>Add new category</h5>
       @endempty
-      <hr>
+      
       <form action=" @isset($category) {{route('categories.update',$category->id)}} @endisset @empty($category){{route('categories.store')}} @endempty" method="POST" enctype="multipart/form-data">
-        @isset($category))
+        @isset($category)
             @method('PUT')
         @endisset
         @csrf
@@ -27,12 +70,7 @@
             <label for="">Slug</label>
             <input type="text" class="form-control" name="slug" value="@isset($category) {{$category->slug}} @endisset">
         </div>
-        <div class="form-group">
-            <label for="">Parent Category</label>
-            <select name="" id="" class="form-control">
-                <option value="" >Categories</option>
-            </select>
-        </div>
+     
         <div class="form-group">
             <label for="">Description</label>
             <textarea name="description" id="" class="form-control"> @isset($category) {{$category->description}} @endisset</textarea>
@@ -50,43 +88,6 @@
       </form>
     </div>
     <div class="col-md-8">
-        <div class="row pl-3 pr-3 pb-2 justify-content-between">
-            <div>
-                .
-            </div>
-            <div>
-                <form action="{{route('products.index')}}" method="GET" class="form-inline" >
-                    <div class="form-group mr-1">
-                        <input type="text" name="searchresult" class="form-control" value="{{request()->query('searchresult')}}">
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-indexbtns">Search Categories</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="row pl-3 pr-3 pb-3 justify-content-between">
-            <div>
-                <form action="" class="form-inline">
-                    <div class="form-group mr-1">
-                        <select name="" id="" class="form-control">
-                            <option value="">Bulk actions</option>
-                            <option value="">Trash</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-indexbtns">Apply</button>
-                    </div>
-                </form>
-            </div>
-            <div>
-                <form action="" class="form-inline">
-                    <div class="form-group mr-1">
-                        {{ $categories->appends(['search' => request()->query('search')])->links() }}
-                    </div>
-                </form>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
@@ -121,7 +122,7 @@
                                     </td>
                                     <td>
                                         @if ($category->image === '')
-                                        <img class="bg-white p-1" src="{{asset('images/blankimage.png')}}" alt="{{$category->image}}" height="50px" width="50px">
+                                        <img class="bg-white p-1" src="{{asset('images/default/blankimage.png')}}" alt="{{$category->image}}" height="50px" width="50px">
                                         @else
                                         <img class="bg-white p-1"  src="{{asset('images/'.$category->image)}}" alt="{{$category->image}}" height="50px" width="50px">
                                         @endif
@@ -129,17 +130,30 @@
                                     <td><b>{{$category->name}}</b><br>
                                     <span><a href="{{route('categories.edit', $category->id)}}">Edit</a> |
                                          <a class="" href="">View</a> | <a href="">Duplicate</a> |
-                                         <form method="POST" action = "{{route('categories.destroy', $category->id)}}">
+                                         <a  href="#" onclick="document.getElementById('deletecat').submit();">(Delete <i class="fas fa-frown"></i>)</a>
+                                         <form method="POST" id="deletecat" action = "{{route('categories.destroy', $category->id)}}">
                                             @csrf
                                             @method('delete')
-                                            <button class="text-danger" type="submit" >Delete</button>
+                                            {{-- <button class="text-danger" type="submit" >Delete</button> --}}
                                          </form>
                                         
                                     </span>
                                     </td>
-                                    <td>{{$category->description}}</td>
-                                    <td>{{$category->slug}}</td>
-                                    <td>{{$category->products->Count()}}</td>
+                                    <td class="text-center">
+                                        @if ($category->description == '')
+                                          &mdash;
+                                        @else
+                                        {{$category->description}}
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($category->slug == '')
+                                        &mdash; 
+                                    @else
+                                    {{$category->slug}}
+                                    @endif
+                                    </td>
+                                    <td class="text-center">{{$category->products->Count()}}</td>
                                 </tr>
                             @endforeach
                         </tbody>

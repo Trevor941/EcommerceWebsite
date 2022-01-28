@@ -113,7 +113,7 @@
                             </td>
                             <td>
                                 @if ($product->featuredimage === '')
-                                <img class="bg-white p-1" src="{{asset('images/blankimage.jpg')}}" alt="{{$product->featuredimage}}" height="50px" width="50px">
+                                <img class="bg-white p-1" src="{{asset('images/default/blankimage.jpg')}}" alt="{{$product->featuredimage}}" height="50px" width="50px">
                                 @else
                                 <img class="bg-white p-1"  src="{{asset('images/'.$product->featuredimage)}}" alt="{{$product->featuredimage}}" height="50px" width="50px">
                                 @endif

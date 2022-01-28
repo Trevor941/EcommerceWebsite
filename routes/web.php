@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('products', 'App\Http\Controllers\ProductsController');
 Route::resource('categories', 'App\Http\Controllers\CategoriesController');
+Route::resource('tags', 'App\Http\Controllers\TagsController');
 Route::get('/trashProduct/{id}','App\Http\Controllers\ProductsController@trashProduct');
 Route::get('/deleteProduct/{id}','App\Http\Controllers\ProductsController@deleteProduct');
 Route::get('/restoreProduct/{id}','App\Http\Controllers\ProductsController@restoreProduct');
