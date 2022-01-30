@@ -132,6 +132,7 @@
                <div class="row p-3">
                 <label for="">Product Gallery Images</label><br>
                 <div class="form-group col-md-12 darkerlightbg">
+                    @if (file_exists('images/featuredimg/'. $product->featuredimage) )
                         @foreach ($product->galleryimages as $image)
                         <div class="form-check form-check-inline m-1 p-1">
                             <label class="form-check-label">
@@ -140,6 +141,7 @@
                             </label>
                           </div>
                         @endforeach
+                        @endif
                     <input type="file" class="form-control" name="galleryimages[]" id="file" multiple/>
                 </div>
             
@@ -155,6 +157,7 @@
     .form-check-inline .form-check-input{
         margin-left: -15px !important;
     }
+    
     #addproduct{
       padding: 20px;
     background: #fff;
@@ -165,6 +168,7 @@
     padding: 10px;
     border-radius: 5px; 
     }
+
     .img-wraps {
     position: relative;
     display: inline-block;

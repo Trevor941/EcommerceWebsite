@@ -274,6 +274,21 @@ class ProductsController extends Controller
               }
             }
         }
+        else{
+             $product->galleryimages()->delete();
+             $filename = '';
+             $path = public_path('images/galleryimages');
+             $allFiles = File::allFiles($path); 
+             foreach($allFiles as $filee){
+                $filename = $filee->getFileName();
+                $checkfilenamexists = Gallery::where('name', $filename)->first();
+               if($checkfilenamexists === null){
+                   
+                   File::delete(public_path()."/images/galleryimages/".$filename);
+              }
+            }
+            }
+        
 
       // adding multiple gallery images unlink( public_path()."/images/".$gimage->name);
         if($request->hasFile('galleryimages')){
