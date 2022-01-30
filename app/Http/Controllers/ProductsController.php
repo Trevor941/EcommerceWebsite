@@ -14,6 +14,7 @@ use App\Models\Role;
 use App\Http\Requests\ProductValidateRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Image;
 class ProductsController extends Controller
 {
     /**
@@ -94,7 +95,14 @@ class ProductsController extends Controller
                 $imageName = $request->name.time().'.'.$request->featuredimage->extension();
                 $path = $request->file('featuredimage')->move('images/featuredimg', $imageName);
                  $product->featuredimage = $imageName;
+                 $img = Image::make($path);
+                 $img->resize(null, 300, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save($path);
         }
+       
+
         $product->save();
 
         //adding product category
@@ -112,13 +120,14 @@ class ProductsController extends Controller
         //checking if a tag name exist and adding it if it doesn't exist
         foreach($explode_tags as $tagname){
             $checktag = Tag::where('name', $tagname)->first();
-            if($checktag === null){
+            if($checktag !== null){
+                $tagid = $checktag->id;
+            }
+            else{
                 $newtag = new Tag();
                 $newtag->name = $tagname;
                 $newtag->save();
                 $tagid = $newtag->id;
-            }else{
-                $tagid = $checktag->id;
             }
             //pushing all ids to the tagsid array
             array_push($tagids, $tagid);
@@ -136,6 +145,12 @@ class ProductsController extends Controller
                 $gallery->name = $imageName;
                 $gallery->product_id = $product->id;
                 $gallery->save();
+
+                $img = Image::make($path);
+                 $img->resize(null, 300, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save($path);
             }
         }
        return redirect(route('products.create'))->with('success', 'New product created successfully');
@@ -189,14 +204,18 @@ class ProductsController extends Controller
          
          //adding a featured image
         if($request->hasFile('featuredimage')){
-               $file =  public_path()."images/featuredimg".$product->featuredimage;
+               $file =  public_path()."/images/featuredimg/".$product->featuredimage;
             if(file_exists($file)){
-                unlink( public_path()."images/featuredimg".$product->featuredimage);
+                File::delete(public_path()."/images/featuredimg/".$product->featuredimage);
               }
-              
                 $imageName = $request->name.time().'.'.$request->featuredimage->extension();
                 $path = $request->file('featuredimage')->move('images/featuredimg', $imageName);
                  $product->featuredimage = $imageName;
+                 $img = Image::make($path);
+                 $img->resize(null, 300, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save($path);
         }
         $product->update();
 
@@ -204,7 +223,7 @@ class ProductsController extends Controller
         $product->categories()->sync($request->categories);
 
         //getting string of tags and converting it into an array
-       if($request->tags === ''){
+       if($request->tags){
         $explode_tags = explode(',', $request->tags);
 
         //initializing tagids array
@@ -213,13 +232,15 @@ class ProductsController extends Controller
         //checking if a tag name exist and adding it if it doesn't exist
         foreach($explode_tags as $tagname){
             $checktag = Tag::where('name', $tagname)->first();
-            if($checktag === null){
+            
+            if($checktag !== null){
+                $tagid = $checktag->id;
+            }
+            else{
                 $newtag = new Tag();
                 $newtag->name = $tagname;
                 $newtag->save();
                 $tagid = $newtag->id;
-            }else{
-                $tagid = $checktag->id;
             }
             //pushing all ids to the tagsid array
             array_push($tagids, $tagid);
@@ -234,7 +255,7 @@ class ProductsController extends Controller
     if($request->inimages){
         $product->galleryimages()->delete();
         $filename = '';
-        $path = public_path('images');
+        $path = public_path('images/galleryimages');
         $allFiles = File::allFiles($path); 
       
            foreach($request->inimages as $reqimage){
@@ -248,21 +269,11 @@ class ProductsController extends Controller
                 $filename = $filee->getFileName();
                 $checkfilenamexists = Gallery::where('name', $filename)->first();
                if($checkfilenamexists === null){
-                File::delete(public_path()."images/galleryimages".$filename);
+                   
+                   File::delete(public_path()."/images/galleryimages/".$filename);
               }
             }
-           
-             //  dd($allFiles);
-             
-             
-               
-             
         }
-    
-          
-          
-           
-   
 
       // adding multiple gallery images unlink( public_path()."/images/".$gimage->name);
         if($request->hasFile('galleryimages')){
@@ -273,10 +284,16 @@ class ProductsController extends Controller
                 $gallery->name = $imageName;
                 $gallery->product_id = $product->id;
                 $gallery->save();
+                $img = Image::make($path);
+                $img->resize(null, 300, function ($constraint) {
+                   $constraint->aspectRatio();
+               });
+               $img->save($path);
+
             }
         }
-     return redirect(route('products.edit', $product->id ))->with('success', 'Product updated successfully');
-     //return $request->inimages;
+    return redirect(route('products.edit', $product->id ))->with('success', 'Product updated successfully');
+      
     }
 
     /**

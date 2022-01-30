@@ -122,12 +122,14 @@
                <div class="row p-3">
                 <label for="">Product Image</label><br>
                 <div class="form-group col-md-12 darkerlightbg">
+                    @if (file_exists('images/featuredimg/'. $product->featuredimage) )
                     <img class="m-1 p-1 bg-white float-left" src="{{asset('images/featuredimg/'.$product->featuredimage)}}" height="150px" width="150px" />
+                    @endif
                     <input type="file" class="form-control" name="featuredimage" id="file"/>
                     <small>Select an image to change the product image</small>
                 </div>
                </div>
-               <div class="row">
+               <div class="row p-3">
                 <label for="">Product Gallery Images</label><br>
                 <div class="form-group col-md-12 darkerlightbg">
                         @foreach ($product->galleryimages as $image)

@@ -112,10 +112,10 @@
                                   </div>
                             </td>
                             <td>
-                                @if ($product->featuredimage === '')
-                                <img class="bg-white p-1" src="{{asset('images/default/blankimage.jpg')}}" alt="{{$product->featuredimage}}" height="50px" width="50px">
+                                @if ($product->featuredimage === '' && ffile_exists('images/featuredimg/'. $product->featuredimage) )
+                               <img class="bg-white p-1"  src="{{asset('images/featuredimg/'.$product->featuredimage)}}" alt="{{$product->featuredimage}}" height="50px" width="50px">
                                 @else
-                                <img class="bg-white p-1"  src="{{asset('images/'.$product->featuredimage)}}" alt="{{$product->featuredimage}}" height="50px" width="50px">
+                                <img class="bg-white p-1" src="{{asset('images/default/blankimage.jpg')}}" alt="{{$product->featuredimage}}" height="50px" width="50px">
                                 @endif
                             </td>
                             <td><b>{{$product->name}}</b><br>
@@ -130,14 +130,14 @@
                             <td>
                                 @if (Count($product->categories) > 0)
                                 @foreach ($product->categories as $category)
-                                <a href="#">{{$category->name }},</a>
+                                <a href="{{route('categories.edit', $category->id)}}">{{$category->name }},</a>
                                  @endforeach
                                 @endif
                             </td>
                             <td>
                                 @if (Count($product->tags) > 0)
                                 @foreach ($product->tags as $tag)
-                                <a href="#">{{$tag->name }},</a>
+                                <a href="{{route('tags.edit', $tag->id)}}">{{$tag->name }},</a>
                                  @endforeach
                                 @endif
                             </td>
