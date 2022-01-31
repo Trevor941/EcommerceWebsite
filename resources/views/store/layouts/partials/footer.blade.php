@@ -5,9 +5,9 @@
                 <div class="footer-widget">
                     <h2>Get in Touch</h2>
                     <div class="contact-info">
-                        <p><i class="fa fa-map-marker"></i>123 E Store, Los Angeles, USA</p>
-                        <p><i class="fa fa-envelope"></i>email@example.com</p>
-                        <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                        <p><i class="fa fa-map-marker"></i>123 Ecommerce Store, Bellville, Cape Town</p>
+                        <p><i class="fa fa-envelope"></i>info@ecommerce.com</p>
+                        <p><i class="fa fa-phone"></i>+27-787-54-9982</p>
                     </div>
                 </div>
             </div>
@@ -75,11 +75,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 copyright">
-                <p>Copyright &copy; <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved</p>
+                <p>Copyright &copy; <a href="https://htmlcodex.com">Ecommerce Store</a>. All Rights Reserved</p>
             </div>
 
             <div class="col-md-6 template-by">
-                <p>Template By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                <p>Established: <a href="https://htmlcodex.com"> 2022</a></p>
             </div>
         </div>
     </div>

@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-sm-6">
                 <i class="fa fa-envelope"></i>
-                support@email.com
+                info@ecommerce.com
             </div>
             <div class="col-sm-6">
                 <i class="fa fa-phone-alt"></i>
-                +012-345-6789
+                +27-787-54-9982
             </div>
         </div>
     </div>

@@ -4,7 +4,8 @@
             <div class="col-md-3">
                 <div class="logo">
                     <a href="index.html">
-                        <img src="{{asset('store/img/logo.png')}}" alt="Logo">
+                        
+                        <h1><U>ECOMMERCE</U></h1>
                     </a>
                 </div>
             </div>

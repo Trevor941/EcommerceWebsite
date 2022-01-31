@@ -9,8 +9,15 @@
     color: #fff;
     margin-bottom: 30px;
   }
-  .sidebar, .scroll-to-top{
+   .sidebar, .scroll-to-top{
     background: #FF6F61 !important;
+  }
+  .bg-gradient-orange{
+    background-color:  #FF6F61 !important;
+    background-image: linear-gradient(
+180deg
+,#FF6F61 10%,#FF6F61 100%) !important;
+    background-size: cover !important;
   }
   .btn-primary{
     background: #FF6F61 !important;

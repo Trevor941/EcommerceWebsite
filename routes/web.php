@@ -14,9 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('store.index');
+   //return $products;
 });
-
+Route::get('/store/products', function () {
+    return view('store.products');
+   //return $products;
+})->name('store.products');
+Route::get('/store/products/{id}', 'App\Http\Controllers\Store\ProductsController@show')->name('store.productdetail');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
