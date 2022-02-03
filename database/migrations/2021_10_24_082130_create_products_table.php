@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->integer('product_sizes_id')->unsigned();
             $table->decimal('saleprice', 10,2)->nullable();
             $table->integer('published');
+            // $table->integer('quantity');
             $table->string('featuredimage');
             $table->softDeletes();
             $table->timestamps();

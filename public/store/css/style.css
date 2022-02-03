@@ -1521,7 +1521,7 @@ h2 {
     font-size: 16px;
     color: #ffffff;
     text-align: center;
-    background: #000000;
+    background: #FF6F61;
     border: none;
 }
 
@@ -1612,15 +1612,18 @@ h2 {
 }
 
 .cart-page .cart-summary .cart-btn button:first-child {
-    margin-right: 25px;
+    
     color: #FF6F61;
-    background: #ffffff;
-    border: 1px solid #FF6F61;
+    background: #f3f6ff;
+    border: 1px solid #353535;
 }
 
 .cart-page .cart-summary .cart-btn button:first-child:hover {
-    color: #ffffff;
+    color: #fff;
     background: #FF6F61;
+    font-size: 20px;
+    font-weight: bold;
+    border: 3px solid #FF6F61;
 }
 
 

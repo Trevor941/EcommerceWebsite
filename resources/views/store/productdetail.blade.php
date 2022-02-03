@@ -52,7 +52,7 @@
                                             <h4>Quantity:</h4>
                                             <div class="qty">
                                                 <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                                <input type="text" value="1">
+                                                <input type="text" value="{{$product->quantity}}">
                                                 <button class="btn-plus"><i class="fa fa-plus"></i></button>
                                             </div>
                                         </div>
@@ -73,8 +73,16 @@
                                             </div> 
                                         </div>
                                         <div class="action">
-                                            <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-                                            <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
+                                            <form action="{{route('addtocart', $product->id)}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{$product->id}}">
+                                                <input type="hidden" name="name" value="{{$product->name}}">
+                                                <input type="hidden" name="featuredimage" value="{{$product->featuredimage}}">
+                                                <input type="hidden" name="regularprice" value="{{$product->regularprice}}">
+                                                <input type="hidden" name="quantity" value="{{$product->quantity}}">
+                                                <button class="btn" type="submit"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+                                                <button class="btn" type="submit" ><i class="fa fa-shopping-bag"></i>Buy Now</a>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

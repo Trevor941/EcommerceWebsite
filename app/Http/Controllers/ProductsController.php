@@ -90,6 +90,7 @@ class ProductsController extends Controller
          $product->product_sizes_id = $request->product_sizes_id;
          $product->product_colors_id = $request->product_colors_id;
          $product->published = $request->published;
+         $product->quantity = 1;
          //adding a featured image
         if($request->hasFile('featuredimage')){
                 $imageName = $request->name.time().'.'.$request->featuredimage->extension();
@@ -201,7 +202,7 @@ class ProductsController extends Controller
          $product->product_sizes_id = $request->product_sizes_id;
          $product->product_colors_id = $request->product_colors_id;
          $product->published = $request->published;
-         
+         $product->quantity = 1;
          //adding a featured image
         if($request->hasFile('featuredimage')){
                $file =  public_path()."/images/featuredimg/".$product->featuredimage;
