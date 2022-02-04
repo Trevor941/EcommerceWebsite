@@ -60,7 +60,7 @@
                                             <h4>Size:</h4>
                                             <div class="btn-group btn-group-sm">
                                                 @foreach ($sizes as $size)
-                                                <button type="button" class="btn">{{$size->name}}</button>
+                                                <button type="button" class="btn">{{$size->size}}</button>
                                                 @endforeach
                                             </div> 
                                         </div>
