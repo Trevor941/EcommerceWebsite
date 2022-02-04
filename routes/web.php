@@ -35,7 +35,14 @@ Route::get('/restoreAllProducts','App\Http\Controllers\ProductsController@restor
 Route::get('/AllTrashedProducts','App\Http\Controllers\ProductsController@AllTrashedProducts');
 Route::get('/search','App\Http\Controllers\ProductsController@search');
 Route::get('/roles','App\Http\Controllers\ProductsController@useroles');
+
 Route::get('/cart','App\Http\Controllers\Store\CartController@cart')->name('cart');
 Route::post('/addtocart/{id}','App\Http\Controllers\Store\CartController@addtocart')->name('addtocart');
 Route::post('/updatecart','App\Http\Controllers\Store\CartController@updatecart')->name('updatecart');
 Route::post('/removefromcart','App\Http\Controllers\Store\CartController@removefromcart')->name('removefromcart');
+Route::get('/checkout','App\Http\Controllers\Store\OrdersController@checkout')->name('checkout');
+Route::post('/createorder','App\Http\Controllers\Store\OrdersController@createorder')->name('createorder');
+Route::get('/payment','App\Http\Controllers\Store\PaymentController@payment')->name('payment');
+Route::get('/verifypayment/{transaction_id}','App\Http\Controllers\Store\PaymentController@verifypayment')->name('verifypayment');
+Route::get('/completepayment', 'App\Http\Controllers\Store\PaymentController@completepayment')->name('completepayment');
+Route::get('/thankyou', 'App\Http\Controllers\Store\PaymentController@thankyou')->name('thankyou');

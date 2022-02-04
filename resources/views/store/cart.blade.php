@@ -100,8 +100,9 @@
                                             <p>Grand Total<span>${{Session::get('total')}}</span></p>
                                         </div>
                                         <div class="cart-btn">
-                                            {{-- <button>Update Cart</button> --}}
-                                            <button style="float: right;">Checkout</button>
+                                            <form action="{{route('checkout')}}" method="GET">
+                                                <button style="float: right;" type="submit">Checkout</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

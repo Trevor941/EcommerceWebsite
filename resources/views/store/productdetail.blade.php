@@ -176,14 +176,9 @@
                                             </div>
                                         </div>
                                         <div class="product-image">
-                                            <a href="product-detail.html">
+                                            <a href="="{{route('store.productdetail', $product->id)}}">
                                                 <img src="{{asset('images/featuredimg/'.$product->featuredimage)}}" alt="Product Image">
                                             </a>
-                                            <div class="product-action">
-                                                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                                <a href="#"><i class="fa fa-heart"></i></a>
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </div>
                                         </div>
                                         <div class="product-price">
                                             <h3><span>$</span>{{$product->regularprice}}</h3>

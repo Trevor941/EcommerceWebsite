@@ -75,14 +75,9 @@
                                         </div>
                                     </div>
                                     <div class="product-image">
-                                        <a href="product-detail.html">
+                                        <a href="{{route('store.productdetail', $product->id)}}">
                                             <img src="{{asset('images/featuredimg/'.$product->featuredimage)}}" alt="Product Image">
                                         </a>
-                                        <div class="product-action">
-                                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                            <a href="#"><i class="fa fa-heart"></i></a>
-                                            <a href="#"><i class="fa fa-search"></i></a>
-                                        </div>
                                     </div>
                                     <div class="product-price">
                                         <h3><span>$</span>{{$product->regularprice}}</h3>
@@ -98,15 +93,7 @@
                         <div class="col-md-12">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">
-                                    {{-- <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li> --}}
+                                 
                                 </ul>
                             </nav>
                             {{ $allproducts->appends(['search' => request()->query('search')])->links() }}
