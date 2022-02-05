@@ -50,24 +50,31 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-indexbtns">Apply</button>
+                <a href="javascript:{}" class="btn btn-indexbtns" onclick="document.getElementById('bulkactions').submit();">Apply2 </a>
             </div>
         </form>
     </div>
     <div>
-        <form action="" class="form-inline">
+        <form action="{{route('products.index')}}" method="GET" class="form-inline">
             <div class="form-group mr-1">
-                <select name="" id="" class="form-control">
+                <select name="selectedcategory" id="" class="form-control">
                     <option value="">Select a category</option>
                     @foreach ($categories as $category)
-                    <option value="{{$category->id}}">{{$category->name}} ({{$category->products->count()}})</option>
+                    <option value="{{$category->id}}"
+                      @if(request()->query('selectedcategory') === "$category->id" )  
+                         selected
+                         @endif
+                         >{{$category->name}} ({{$category->products->count()}})
+                    </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group mr-1">
-                <select name="" id="" class="form-control">
+                <select name="selectedstock" id="" class="form-control">
                     <option value="">Filter by stock status </option>
-                    <option value="1">Instock</option>
-                    <option value="0">Out of Stock</option>
+                    <option value="1" @if(request()->query('selectedstock' ) === "1") selected @endif>Instock</option>
+                    <option value="2" @if(request()->query('selectedstock' ) === "2") selected @endif>Low Stock</option>
+                    <option value="3" @if(request()->query('selectedstock' ) === "3") selected @endif>Out of Stock</option>
                 </select>
             </div>
             <div class="form-group">
@@ -79,12 +86,14 @@
 <div class="row">
     <div class="col-md-12">
         <div class="table-responsive">
+            <form action="{{route('products.bulkactions')}}" method="POST" id="bulkactions">
+                @csrf
             <table class="table table-bordered table-striped">
                 <thead class="bg-white">
                    <tr>
                        <th>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <input class="form-check-input" type="checkbox"  id="select-all">
                         <label class="form-check-label" for="defaultCheck1">
                           
                         </label>
@@ -105,9 +114,9 @@
                         <tr>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="{{$product->id}}" name="product_ids[]">
                                     <label class="form-check-label" for="defaultCheck1">
-                                      
+
                                     </label>
                                   </div>
                             </td>
@@ -151,6 +160,7 @@
                 </tbody>
 
             </table>
+        </form>
             {{ $products->appends(['search' => request()->query('search')])->links() }}
         </div>
     </div>
@@ -160,4 +170,22 @@
         border-color: #858796;  
     }
     </style>
+    <script>
+        $(document).ready(function(){
+            $('#select-all').click(function(event) {   
+    if(this.checked) {
+        // Iterate each checkbox
+        $(':checkbox').each(function() {
+            this.checked = true;                        
+        });
+    } else {
+        $(':checkbox').each(function() {
+            this.checked = false;                       
+        });
+    }
+            });
+        })
+ 
+
+        </script>
 @endsection

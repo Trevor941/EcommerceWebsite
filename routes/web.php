@@ -35,6 +35,8 @@ Route::get('/restoreAllProducts','App\Http\Controllers\ProductsController@restor
 Route::get('/AllTrashedProducts','App\Http\Controllers\ProductsController@AllTrashedProducts');
 Route::get('/search','App\Http\Controllers\ProductsController@search');
 Route::get('/roles','App\Http\Controllers\ProductsController@useroles');
+Route::get('/searchbycategory','App\Http\Controllers\ProductsController@searchbycategory')->name('searchbycategory');
+Route::post('/bulkactions','App\Http\Controllers\ProductsController@bulkactions')->name('products.bulkactions');
 
 Route::get('/cart','App\Http\Controllers\Store\CartController@cart')->name('cart');
 Route::post('/addtocart/{id}','App\Http\Controllers\Store\CartController@addtocart')->name('addtocart');

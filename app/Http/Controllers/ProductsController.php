@@ -26,12 +26,13 @@ class ProductsController extends Controller
        $this->middleware('admin');
       
     }
-    public function index()
+    public function index(Request $request)
     {
         $searchproduct = request()->query('searchresult');
         $searchdraft = request()->query('draft');
         $searchpublished = request()->query('published');
-        $searchtrash = request()->query('searchtrash');
+        $selectedcategory = request()->query('selectedcategory');
+        $selectedstock = request()->query('selectedstock');
         if($searchdraft){
             $products = Product::where('published', 'LIKE', "0")->paginate(22);
         }
@@ -41,9 +42,34 @@ class ProductsController extends Controller
         else if($searchproduct){
             $products = Product::where('name', 'LIKE', "%{$searchproduct}%")->paginate(22);  
         }
-
-        else if($searchtrash){
-            $products = Product::where('deleted_at', '!=', NULL)->paginate(22);  
+        else if($selectedstock == '1' && $selectedcategory != null){
+            $products = Product::where('stock', '>=', 10 )->whereHas('categories', function($query) use ($request){
+                $query->where('category_id', $request->selectedcategory);
+            })->paginate(22);
+        }
+        else if($selectedstock == '2' && $selectedcategory != null){
+            $products = Product::whereBetween('stock', [1, 10])->whereHas('categories', function($query) use ($request){
+                $query->where('category_id', $request->selectedcategory);
+            })->paginate(22);
+        }
+        else if($selectedstock == '3' && $selectedcategory != null){
+            $products = Product::where('stock', 0)->whereHas('categories', function($query) use ($request){
+                $query->where('category_id', $request->selectedcategory);
+            })->paginate(22);
+        }
+        else if($selectedstock == '1'){
+            $products = Product::where('stock', '>=', 10 )->paginate(22);
+        }
+        else if($selectedstock == '2'){
+            $products = Product::whereBetween('stock', [1, 10])->paginate(22);
+        }
+        else if($selectedstock == '3'){
+            $products = Product::where('stock', 0)->paginate(22);
+        }
+        else if($selectedcategory){
+            $products = Product::whereHas('categories', function($query) use ($request){
+                $query->where('category_id', $request->selectedcategory);
+            })->paginate(22);
         }
         else {
             $products = Product::paginate(22); 
@@ -57,6 +83,15 @@ class ProductsController extends Controller
        return view('products.index', compact(['products', 'categories', 'published', 'draft', 'AllTrashedProducts', 'withTrashed']));
             
     }
+
+    public function bulkactions(Request $request){
+        return $request->product_ids;
+        return 'bulkactions';
+    }
+    // public function searchbycategory(){
+    //     $var = request()->query('selectedcategory');
+    //     return gettype($var);
+    // }
 
     /**
      * Show the form for creating a new resource.

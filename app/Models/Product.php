@@ -38,5 +38,7 @@ class Product extends Model
     public function tags(){
         return $this->belongsToMany(Tag::class, 'product_tag');
     }
-    
+    // public function searchbycategory(){
+    //     return $this->categories()->wherePivot('category_id', 3);
+    // }
 }
