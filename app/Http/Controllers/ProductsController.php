@@ -12,6 +12,7 @@ use App\Models\Gallery;
 use App\Models\Tag;
 use App\Models\Role;
 use App\Http\Requests\ProductValidateRequest;
+use App\Http\Requests\BulkActionRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Image;
@@ -84,10 +85,7 @@ class ProductsController extends Controller
             
     }
 
-    public function bulkactions(Request $request){
-        return $request->product_ids;
-        return 'bulkactions';
-    }
+    
     // public function searchbycategory(){
     //     $var = request()->query('selectedcategory');
     //     return gettype($var);
@@ -401,23 +399,61 @@ class ProductsController extends Controller
         return view('products.trash', compact(['AllTrashedProducts', 'categories', 'published', 'draft', 'withTrashed']));
     }
 
-    public function searchpublished(Request $request){
-        $search_text = $request->get('searchtrash');
-        $published = Product::where('published', 1);
 
-    }
+    // public function useroles(){
 
-    public function useroles(){
-
-      //  $role = Role::findOrFail($id);
-      $user = auth()->user();
+    //   //  $role = Role::findOrFail($id);
+    //   $user = auth()->user();
         
 
-        if(auth()->user()->roles->contains('name', 'Admin')){
-            return 'true';
-           }
-           else{
-            return redirect('/login');
-           }
+    //     if(auth()->user()->roles->contains('name', 'Admin')){
+    //         return 'true';
+    //        }
+    //        else{
+    //         return redirect('/login');
+    //        }
+    // }
+
+
+    public function bulkactions(BulkActionRequest $request){
+        if($request->selectedaction === '2'){
+            foreach($request->product_ids as $product_id){
+                Product::findOrFail($product_id)->delete();
+            }
+            return redirect(route('products.index'))->with('success', 'Products deleted successfully');
+        }
+       
+    }
+
+    public function bulkactionstrash(BulkActionRequest $request){
+       
+        
+        if($request->selectedaction === '1'){
+            foreach($request->product_ids as $product_id){
+                $product = Product::onlyTrashed()->findOrFail($product_id);
+                $filepath = public_path()."images/featuredimg".$product->featuredimage;
+                if(file_exists($filepath)){
+                unlink( $filepath);
+                }
+                $galleryimages = Gallery::all();
+                foreach($galleryimages as $galleryimage){
+                    if($galleryimage->product_id === $product->id){
+                        $filepath = public_path()."images/galleryimages".$galleryimage->name;
+                if(file_exists($filepath)){
+                unlink( $filepath);
+                }
+                    }
+                }
+                $product->forceDelete();
+            }
+            return redirect(route('products.index'))->with('success', 'Products deleted successfully');
+        }
+       if($request->selectedaction === '2'){
+            foreach($request->product_ids as $product_id){
+                Product::onlyTrashed()->findOrFail($product_id)->restore();
+            }
+            return redirect(route('products.index'))->with('success', 'Products restored successfully');
+        }
+       
     }
 }

@@ -144,30 +144,7 @@
     $(document).ready(function () {
         $('.ckeditor').ckeditor();
     });
-// $(document).ready(function(){
-//     $("#submitProduct").removeAttr("disabled");
-//     $("#saleprice").change(function(){
-//         $saleprice = $("#saleprice").val();
-//         $regularprice = $("#regularprice").val();
-//         if($saleprice > $regularprice){
-//         $("#errorsaleprice").prop("hidden", false);
-//         $("#submitProduct").prop("disabled", true);
-//     }else{
-//         $("#errorsaleprice").prop("hidden", true);
-//         $("#submitProduct").prop("disabled", false);
-//     }
-// })
-// $("#regularprice").change(function(){
-//         $saleprice = $("#saleprice").val();
-//         $regularprice = $("#regularprice").val();
-//         if($saleprice > $regularprice){
-//         $("#errorsaleprice").prop("hidden", false);
-//         $("#submitProduct").prop("disabled", true);
-//     }else{
-//         $("#errorsaleprice").prop("hidden", true);
-//         $("#submitProduct").prop("disabled", false);
-//     }
-// })
+
 })
 </script>
 @endsection

@@ -20,8 +20,8 @@
                 <a href="javascript:{}" onclick="document.getElementById('searchdraft').submit();">Draft </a>({{$draft->count()}}) |
         </form>
         </span>
-            <span><a href="/AllTrashedProducts">Trash </a> ({{$AllTrashedProducts->count()}}) |</span>
-        <span><a href="#">Sorting </a></span>
+            <span><a href="/AllTrashedProducts">Trash </a> ({{$AllTrashedProducts->count()}}) </span>
+       
     </div>
     <div>
         <form action="{{route('products.index')}}" method="GET" class="form-inline" >
@@ -38,13 +38,14 @@
     <div>
         <form action="" class="form-inline">
             <div class="form-group mr-1">
-                <select name="" id="" class="form-control">
-                    <option value="">Bulk actions</option>
-                    <option value="">Trash</option>
+                <select name="bulkactionslist" id="bulkactionslist" class="form-control">
+                    <option>Bulk Action</option>
+                    <option value="1">Delete Permanently</option>
+                    <option value="2">Restore</option>
                 </select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-indexbtns">Apply</button>
+                <a href="javascript:{}" class="btn btn-indexbtns" onclick="document.getElementById('bulkactions').submit();">Apply</a>
             </div>
         </form>
     </div>
@@ -72,14 +73,26 @@
     </div>
 </div>
 <div class="row">
+  <div class="">
+    <ul style="list-style:none">
+        @foreach ($errors->all() as $error)
+        <li class="alert alert-warning">{{ $error }}</li>
+        @endforeach
+      </ul>
+  </div>
+</div>
+<div class="row">
     <div class="col-md-12">
         <div class="table-responsive">
+            <form action="{{route('products.bulkactionstrash')}}" method="POST" id="bulkactions">
+                @csrf
+                <input type="text" name="selectedaction" id="selectedaction"  hidden>
             <table class="table table-bordered table-striped">
                 <thead class="bg-white">
                    <tr>
                        <th>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <input class="form-check-input" type="checkbox"  id="select-all">
                         <label class="form-check-label" for="defaultCheck1">
                           
                         </label>
@@ -100,7 +113,7 @@
                         <tr>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="{{$product->id}}" name="product_ids[]">
                                     <label class="form-check-label" for="defaultCheck1">
                                       
                                     </label>
@@ -147,6 +160,7 @@
 
             </table>
             {{-- {{ $products->links() }} --}}
+            </form>
         </div>
     </div>
 </div>
@@ -155,4 +169,29 @@
         border-color: #858796;  
     }
     </style>
+     <script>
+        $(document).ready(function(){
+            $('#select-all').click(function(event) {   
+    if(this.checked) {
+        // Iterate each checkbox
+        $(':checkbox').each(function() {
+            this.checked = true;                        
+        });
+    } else {
+        $(':checkbox').each(function() {
+            this.checked = false;                       
+        });
+    }
+            });
+
+           $('#bulkactionslist').change( function (){
+            var selectedbulkaction = $('#bulkactionslist').find(":selected");
+            var selectedbulkactionval = $(selectedbulkaction).val();
+            console.log(selectedbulkactionval);
+            $("#selectedaction").val(selectedbulkactionval);
+           })
+        })
+ 
+
+        </script>
 @endsection

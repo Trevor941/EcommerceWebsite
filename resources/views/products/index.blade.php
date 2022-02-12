@@ -25,8 +25,8 @@
                 <a href="javascript:{}" onclick="document.getElementById('searchdraft').submit();">Draft </a>({{$draft->count()}}) |
         </form>
         </span>
-        <span><a href="/AllTrashedProducts">Trash </a> ({{$AllTrashedProducts->count()}}) |</span>
-        <span><a href="#">Sorting </a></span>
+        <span><a href="/AllTrashedProducts">Trash </a> ({{$AllTrashedProducts->count()}}) </span>
+        
     </div>
     <div>
         <form action="{{route('products.index')}}" method="GET" class="form-inline" >
@@ -43,14 +43,13 @@
     <div>
         <form action="" class="form-inline">
             <div class="form-group mr-1">
-                <select name="" id="" class="form-control">
-                    <option value="">Bulk actions</option>
-                    <option value="">Trash</option>
+                <select name="bulkactionslist" id="bulkactionslist" class="form-control">
+                    <option value="1">Bulk actions</option>
+                    <option value="2">Trash</option>
                 </select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-indexbtns">Apply</button>
-                <a href="javascript:{}" class="btn btn-indexbtns" onclick="document.getElementById('bulkactions').submit();">Apply2 </a>
+                <a href="javascript:{}" class="btn btn-indexbtns" onclick="document.getElementById('bulkactions').submit();">Apply</a>
             </div>
         </form>
     </div>
@@ -84,10 +83,20 @@
     </div>
 </div>
 <div class="row">
+    <div class="">
+      <ul style="list-style:none">
+          @foreach ($errors->all() as $error)
+          <li class="alert alert-warning">{{ $error }}</li>
+          @endforeach
+        </ul>
+    </div>
+  </div>
+<div class="row">
     <div class="col-md-12">
         <div class="table-responsive">
             <form action="{{route('products.bulkactions')}}" method="POST" id="bulkactions">
                 @csrf
+                <input type="text" name="selectedaction" id="selectedaction"  hidden>
             <table class="table table-bordered table-striped">
                 <thead class="bg-white">
                    <tr>
@@ -184,6 +193,13 @@
         });
     }
             });
+
+           $('#bulkactionslist').change( function (){
+            var selectedbulkaction = $('#bulkactionslist').find(":selected");
+            var selectedbulkactionval = $(selectedbulkaction).val();
+            console.log(selectedbulkactionval);
+            $("#selectedaction").val(selectedbulkactionval);
+           })
         })
  
 

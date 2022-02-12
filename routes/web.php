@@ -37,6 +37,7 @@ Route::get('/search','App\Http\Controllers\ProductsController@search');
 Route::get('/roles','App\Http\Controllers\ProductsController@useroles');
 Route::get('/searchbycategory','App\Http\Controllers\ProductsController@searchbycategory')->name('searchbycategory');
 Route::post('/bulkactions','App\Http\Controllers\ProductsController@bulkactions')->name('products.bulkactions');
+Route::post('/bulkactionstrash','App\Http\Controllers\ProductsController@bulkactionstrash')->name('products.bulkactionstrash');
 
 Route::get('/cart','App\Http\Controllers\Store\CartController@cart')->name('cart');
 Route::post('/addtocart/{id}','App\Http\Controllers\Store\CartController@addtocart')->name('addtocart');
@@ -48,3 +49,5 @@ Route::get('/payment','App\Http\Controllers\Store\PaymentController@payment')->n
 Route::get('/verifypayment/{transaction_id}','App\Http\Controllers\Store\PaymentController@verifypayment')->name('verifypayment');
 Route::get('/completepayment', 'App\Http\Controllers\Store\PaymentController@completepayment')->name('completepayment');
 Route::get('/thankyou', 'App\Http\Controllers\Store\PaymentController@thankyou')->name('thankyou');
+
+Route::get('orders', 'App\Http\Controllers\Store\OrdersController@index')->name('orders.index');
