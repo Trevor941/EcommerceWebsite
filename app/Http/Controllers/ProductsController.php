@@ -415,7 +415,7 @@ class ProductsController extends Controller
     // }
 
 
-    public function bulkactions(BulkActionRequest $request){
+    public function bulkactionsproducts(BulkActionRequest $request){
         if($request->selectedaction === '2'){
             foreach($request->product_ids as $product_id){
                 Product::findOrFail($product_id)->delete();

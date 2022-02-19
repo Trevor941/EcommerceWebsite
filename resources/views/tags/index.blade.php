@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 header">
-        <h3 class="preview-h">All Tags</h1>
+        <h3 class="preview-h">Tags</h1>
     </div>
 </div>
 <div class="row">

@@ -111,6 +111,10 @@
     <script src="{{asset('admin/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{asset('admin/js/demo/chart-pie-demo.js')}}"></script>
     <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.0/jquery.typeahead.js" integrity="sha512-hIaMZEgNK4DTnrqBvp0sV7bUhmT8hfbhT+6RQ3YX5e3x25xaH5W1kLi4KLAy16gKiebweip2Ng1udOYHSkBMBw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         @if(Session::has('success'))
         toastr.options =

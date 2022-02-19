@@ -19,13 +19,16 @@ class CreateOrdersTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email');
-            $table->string('status');
+            $table->integer('orderstatuses_id')->unsigned();
             $table->string('city');
             $table->string('address');
             $table->string('country');
             $table->string('phone');
             $table->string('date');
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('orderstatuses_id')->references('id')->on('orderstatuses')->onDelete('cascade');
         });
     }
 

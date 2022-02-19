@@ -43,3 +43,9 @@
   background: #FF6F61 !important;
   color: #FF6F61 !important;
 }
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #FF6F61 !important;
+  border-color: #FF6F61 !important;
+}

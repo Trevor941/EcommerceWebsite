@@ -36,8 +36,11 @@ Route::get('/AllTrashedProducts','App\Http\Controllers\ProductsController@AllTra
 Route::get('/search','App\Http\Controllers\ProductsController@search');
 Route::get('/roles','App\Http\Controllers\ProductsController@useroles');
 Route::get('/searchbycategory','App\Http\Controllers\ProductsController@searchbycategory')->name('searchbycategory');
-Route::post('/bulkactions','App\Http\Controllers\ProductsController@bulkactions')->name('products.bulkactions');
+Route::post('/bulkactions','App\Http\Controllers\ProductsController@bulkactionsproducts')->name('products.bulkactions');
 Route::post('/bulkactionstrash','App\Http\Controllers\ProductsController@bulkactionstrash')->name('products.bulkactionstrash');
+Route::get('/orders', 'App\Http\Controllers\Store\OrdersController@index')->name('orders.index');
+Route::post('/bulkactionsorders','App\Http\Controllers\Store\OrdersController@bulkactionsorders')->name('orders.bulkactionsorders');
+Route::get('/autocompletecustomer', 'App\Http\Controllers\Store\OrdersController@autocompletecustomer')->name('autocomplete-search');
 
 Route::get('/cart','App\Http\Controllers\Store\CartController@cart')->name('cart');
 Route::post('/addtocart/{id}','App\Http\Controllers\Store\CartController@addtocart')->name('addtocart');
@@ -50,4 +53,3 @@ Route::get('/verifypayment/{transaction_id}','App\Http\Controllers\Store\Payment
 Route::get('/completepayment', 'App\Http\Controllers\Store\PaymentController@completepayment')->name('completepayment');
 Route::get('/thankyou', 'App\Http\Controllers\Store\PaymentController@thankyou')->name('thankyou');
 
-Route::get('orders', 'App\Http\Controllers\Store\OrdersController@index')->name('orders.index');

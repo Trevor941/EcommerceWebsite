@@ -176,7 +176,7 @@
                                             </div>
                                         </div>
                                         <div class="product-image">
-                                            <a href="="{{route('store.productdetail', $product->id)}}">
+                                            <a href="{{route('store.productdetail', $product->id)}}">
                                                 <img src="{{asset('images/featuredimg/'.$product->featuredimage)}}" alt="Product Image">
                                             </a>
                                         </div>

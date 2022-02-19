@@ -141,74 +141,6 @@
         </div>
         <!-- Feature End-->      
         
-        <!-- Category Start-->
-        <div class="category">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="category-item ch-400">
-                            <img src="{{asset('store/img/category-3.jpg')}}" />
-                            <a class="category-name" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="category-item ch-250">
-                            <img src="{{asset('store/img/category-4.jpg')}}" />
-                            <a class="category-name" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
-                        </div>
-                        <div class="category-item ch-150">
-                            <img src="{{asset('store/img/category-5.jpg')}}" />
-                            <a class="category-name" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="category-item ch-150">
-                            <img src="{{asset('store/img/category-6.jpg')}}" />
-                            <a class="category-name" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
-                        </div>
-                        <div class="category-item ch-250">
-                            <img src="{{asset('store/img/category-7.jpg')}}" />
-                            <a class="category-name" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="category-item ch-400">
-                            <img src="{{asset('store/img/category-8.jpg')}}" />
-                            <a class="category-name" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Category End-->       
-        
-        <!-- Call to Action Start -->
-        <div class="call-to-action">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <h1>call us for any queries</h1>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="tel:0123456789">+012-345-6789</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Call to Action End -->       
-        
         <!-- Featured Product Start -->
         <div class="featured-product product">
             <div class="container-fluid">
@@ -236,7 +168,7 @@
                             </div>
                             <div class="product-price">
                                 <h3><span>$</span>{{$product->regularprice}}</h3>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                <a class="btn" href="{{route('store.productdetail', $product->id)}}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                             </div>
                         </div>
                     </div>
@@ -291,7 +223,7 @@
                             </div>
                             <div class="product-price">
                                 <h3><span>$</span>{{$product->regularprice}}</h3>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                <a class="btn" href="{{route('store.productdetail', $product->id)}}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                             </div>
                         </div>
                     </div>

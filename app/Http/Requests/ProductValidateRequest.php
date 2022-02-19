@@ -25,7 +25,7 @@ class ProductValidateRequest extends FormRequest
     {
         return [
                 'name' => 'required|min:3|max:28',
-                'SKU' => 'required|unique:products',
+                'SKU' => 'unique:products',
                 'regularprice' => 'required',
                 'saleprice' => '',
                 'description' => '',

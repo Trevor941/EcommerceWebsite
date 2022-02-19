@@ -23,13 +23,13 @@ class PaymentController extends Controller
         if($request->session()->has('order_id') && $request->session()->has('transaction_id')){
         $order_id = $request->session()->get('order_id');
         $transaction_id = $request->session()->get('transaction_id');
-        $order_status = 'paid';
+        $orderstatuses_id = 1;
         $payment_date = date('Y-m-d h:i:s');
 
         //change order status to paid 
         $affected = DB::table('orders')
         ->where('id', $order_id)
-        ->update(['status'=>$order_status]);
+        ->update(['orderstatuses_id'=>$orderstatuses_id]);
 
         //store payment info in payments table
         DB::table('payments')->insert([

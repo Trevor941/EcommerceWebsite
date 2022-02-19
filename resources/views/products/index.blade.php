@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 header">
-        <h3 class="preview-h">All Products</h1>
+        <h3 class="preview-h">Products</h1>
             <ul>
             {{-- @foreach ($role->users() as $user )
                 <li>{{$user->name}}</li>
