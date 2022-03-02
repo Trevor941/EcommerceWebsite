@@ -20,18 +20,18 @@
                 <a href="javascript:{}" onclick="document.getElementById('searchdraft').submit();">Draft </a>({{$draft->count()}}) |
         </form>
         </span>
-            <span><a href="/AllTrashedProducts">Trash </a> ({{$AllTrashedProducts->count()}}) </span>
+            <span><a href="/AllTrashedProducts">Trash </a> ({{$trashcount->count()}}) </span>
        
     </div>
     <div>
-        <form action="{{route('products.index')}}" method="GET" class="form-inline" >
+        {{-- <form action="{{route('products.index')}}" method="GET" class="form-inline" >
             <div class="form-group mr-1">
                 <input type="text" name="searchresult" class="form-control" value="{{request()->query('searchresult')}}">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-indexbtns">Search products</button>
             </div>
-        </form>
+        </form> --}}
     </div>
 </div>
 <div class="row pl-3 pr-3 pb-3 justify-content-between">
@@ -51,7 +51,7 @@
     </div>
     <div>
         <form action="" class="form-inline">
-            <div class="form-group mr-1">
+            {{-- <div class="form-group mr-1">
                 <select name="" id="" class="form-control">
                     <option value="">Select a category</option>
                     @foreach ($categories as $category)
@@ -68,7 +68,7 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-indexbtns">Filter</button>
-            </div>
+            </div> --}}
         </form>
     </div>
 </div>
@@ -161,6 +161,7 @@
             </table>
             {{-- {{ $products->links() }} --}}
             </form>
+            {{ $AllTrashedProducts->appends(['search' => request()->query('search')])->links() }}
         </div>
     </div>
 </div>

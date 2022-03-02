@@ -8,12 +8,13 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
 use App\Http\Requests\BulkActionOrdersRequest;
+use Carbon\Carbon;
 class OrdersController extends Controller
 {
   public function __construct()
   {
-      $this->middleware('auth');
-      $this->middleware('admin');
+      // $this->middleware('auth');
+      // $this->middleware('admin');
   }
 
     public function checkout(){
@@ -99,8 +100,15 @@ class OrdersController extends Controller
        $cancelled = Order::where('orderstatuses_id', 2);
        $refunded = Order::where('orderstatuses_id', 5);
        $orderstatuses = OrderStatus::all();
-      
-      return view('orders.index', compact(['orders','processing', 'orderstatuses', 'onhold','completed', 'cancelled', 'refunded' ]));
+       $ordersearchdates = Order::all();
+       $newdatecollection = [];
+       foreach($ordersearchdates as $date){
+         $newdate = $date->created_at->format('M Y');
+         array_push($newdatecollection, $newdate);
+       }
+       $uniquedate = array_unique($newdatecollection);
+       //return $newdatecollection;
+      return view('orders.index', compact(['orders','processing', 'orderstatuses', 'uniquedate', 'onhold','completed', 'cancelled', 'refunded' ]));
       
     }
 
@@ -128,4 +136,8 @@ class OrdersController extends Controller
       $filterResult = Order::where('firstname', 'LIKE', '%'. $query. '%')->get();
       return response()->json($filterResult);
     }
+
+    
+
+
 }

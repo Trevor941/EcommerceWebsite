@@ -73,8 +73,9 @@
         <form action="{{route('orders.index')}}" method="GET" class="form-inline">
             <div class="form-group mr-1">
                 <select name="selectedcategory" id="" class="form-control">
-                    <option value="">All Dates</option>
-                    <option value="">04 Feb</option>
+                    @foreach($uniquedate as $date)
+                        <option value="{{$date}}">{{$date}}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group mr-1">
@@ -86,6 +87,7 @@
         </form>
     </div>
 </div>
+
 <div class="row">
     <div class="">
       <ul style="list-style:none">

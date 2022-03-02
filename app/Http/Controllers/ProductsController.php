@@ -35,45 +35,45 @@ class ProductsController extends Controller
         $selectedcategory = request()->query('selectedcategory');
         $selectedstock = request()->query('selectedstock');
         if($searchdraft){
-            $products = Product::where('published', 'LIKE', "0")->paginate(22);
+            $products = Product::where('published', 'LIKE', "0")->paginate(6);
         }
         else if($searchpublished){
-            $products = Product::where('published', 'LIKE', "1")->paginate(22);  
+            $products = Product::where('published', 'LIKE', "1")->paginate(6);  
         }
         else if($searchproduct){
-            $products = Product::where('name', 'LIKE', "%{$searchproduct}%")->paginate(22);  
+            $products = Product::where('name', 'LIKE', "%{$searchproduct}%")->paginate(6);  
         }
         else if($selectedstock == '1' && $selectedcategory != null){
             $products = Product::where('stock', '>=', 10 )->whereHas('categories', function($query) use ($request){
                 $query->where('category_id', $request->selectedcategory);
-            })->paginate(22);
+            })->paginate(6);
         }
         else if($selectedstock == '2' && $selectedcategory != null){
             $products = Product::whereBetween('stock', [1, 10])->whereHas('categories', function($query) use ($request){
                 $query->where('category_id', $request->selectedcategory);
-            })->paginate(22);
+            })->paginate(6);
         }
         else if($selectedstock == '3' && $selectedcategory != null){
             $products = Product::where('stock', 0)->whereHas('categories', function($query) use ($request){
                 $query->where('category_id', $request->selectedcategory);
-            })->paginate(22);
+            })->paginate(6);
         }
         else if($selectedstock == '1'){
-            $products = Product::where('stock', '>=', 10 )->paginate(22);
+            $products = Product::where('stock', '>=', 10 )->paginate(6);
         }
         else if($selectedstock == '2'){
-            $products = Product::whereBetween('stock', [1, 10])->paginate(22);
+            $products = Product::whereBetween('stock', [1, 10])->paginate(6);
         }
         else if($selectedstock == '3'){
-            $products = Product::where('stock', 0)->paginate(22);
+            $products = Product::where('stock', 0)->paginate(6);
         }
         else if($selectedcategory){
             $products = Product::whereHas('categories', function($query) use ($request){
                 $query->where('category_id', $request->selectedcategory);
-            })->paginate(22);
+            })->paginate(6);
         }
         else {
-            $products = Product::paginate(22); 
+            $products = Product::paginate(6); 
         }
 
         $withTrashed = Product::withTrashed()->get();
@@ -392,11 +392,12 @@ class ProductsController extends Controller
     public function AllTrashedProducts(){
         
         $withTrashed = Product::withTrashed()->get();
-        $AllTrashedProducts = Product::onlyTrashed()->get();
+        $AllTrashedProducts = Product::onlyTrashed()->paginate(6);
+        $trashcount = Product::onlyTrashed()->get();
         $categories = Category::all();
         $published = Product::where('published', 1);
         $draft = Product::where('published', 0);
-        return view('products.trash', compact(['AllTrashedProducts', 'categories', 'published', 'draft', 'withTrashed']));
+        return view('products.trash', compact(['AllTrashedProducts', 'trashcount', 'categories', 'published', 'draft', 'withTrashed']));
     }
 
 
