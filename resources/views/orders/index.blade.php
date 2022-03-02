@@ -72,14 +72,19 @@
     <div class="col-md-6">
         <form action="{{route('orders.index')}}" method="GET" class="form-inline">
             <div class="form-group mr-1">
-                <select name="selectedcategory" id="" class="form-control">
+                <select name="searchdate" id="" class="form-control">
+                    <option value="">Select Month</option>
                     @foreach($uniquedate as $date)
-                        <option value="{{$date}}">{{$date}}</option>
+                        <option value="{{$date}}"
+                        @if(request()->query('searchdate') === "$date" )  
+                        selected
+                        @endif
+                        >{{$date}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group mr-1">
-                    <input type="text" id="search" name="firstname" placeholder="Search" class="form-control" />
+                    <input type="text" id="search" name="firstname" value="{{request()->query('firstname')}}" placeholder="Customer Firstname" class="form-control" />
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-indexbtns">Filter</button>
@@ -206,6 +211,7 @@
                 });
             }
         });
+        
         })
         </script>
 @endsection

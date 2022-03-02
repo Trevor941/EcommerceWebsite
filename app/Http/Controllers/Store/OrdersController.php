@@ -72,6 +72,9 @@ class OrdersController extends Controller
       $searchcancelled = $request->query('cancelled');
       $searchrefunded = $request->query('refunded');
       $searchorders = $request->query('searchorders');
+      $searchdate = $request->query('searchdate');
+      $searchcustomername = $request->query('firstname');
+
       if($searchonhold){
         $orders = Order::where('orderstatuses_id', 2)->paginate(10);
       }
@@ -107,8 +110,26 @@ class OrdersController extends Controller
          array_push($newdatecollection, $newdate);
        }
        $uniquedate = array_unique($newdatecollection);
-       //return $newdatecollection;
-      return view('orders.index', compact(['orders','processing', 'orderstatuses', 'uniquedate', 'onhold','completed', 'cancelled', 'refunded' ]));
+      
+       if($searchdate){
+        $searchdatearr = explode(" ", $searchdate);
+        $searchmonth = $searchdatearr[0];
+        $searchyear = $searchdatearr[1];
+          $orders = Order::whereMonth('created_at', Carbon::parse($searchmonth)->month)
+                         ->whereYear('created_at', Carbon::parse($searchyear)->year)
+                         ->paginate(10);
+      }
+     if($searchcustomername){
+        $orders = Order::where('firstname', $searchcustomername)->paginate(10);
+      }
+     if($searchcustomername != null && $searchdate !=null){
+      $orders = Order::whereMonth('created_at', Carbon::parse($searchmonth)->month)
+      ->whereYear('created_at', Carbon::parse($searchyear)->year)
+      ->where('firstname', $searchcustomername)->paginate(10);
+      
+     }
+   
+     return view('orders.index', compact(['orders','processing', 'orderstatuses', 'uniquedate', 'onhold','completed', 'cancelled', 'refunded' ]));
       
     }
 
